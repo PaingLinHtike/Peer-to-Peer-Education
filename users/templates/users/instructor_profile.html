@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings - PTP Education</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #7209b7;
+            --accent-color: #f72585;
+            --success-color: #06d6a0;
+            --warning-color: #ffd60a;
+            --danger-color: #ef233c;
+            --dark-color: #2b2d42;
+            --light-color: #f8f9fa;
+            --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background: linear-gradient(135deg, #4c63d2 0%, #6366f1 50%, #7c3aed 100%);
+            padding: 0.75rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            min-height: 60px;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 600;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        .navbar-nav {
+            align-items: center;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255,255,255,0.95) !important;
+            font-weight: 500;
+            margin: 0 0.25rem;
+            padding: 0.5rem 0.75rem !important;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-nav .nav-link i {
+            margin-right: 6px;
+            font-size: 0.85rem;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .navbar-nav .nav-link.active {
+            color: white !important;
+            background: rgba(255,255,255,0.2);
+            font-weight: 600;
+        }
+
+        .profile-dropdown .dropdown-toggle {
+            border-radius: 6px;
+            padding: 0.4rem 0.75rem;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-dropdown .dropdown-toggle:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .profile-img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .navbar-toggler {
+            border: none;
+            color: white;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--gradient-primary);
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 20px rgba(67, 97, 238, 0.1);
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .mobile-nav-item.active,
+        .mobile-nav-item:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-card {
+            background: white;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 2rem;
+        }
+
+        /* Form Styles */
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+        }
+
+        /* Button Styles */
+        .btn {
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+        }
+
+        /* Current Photo Styles */
+        .current-profile-photo {
+            max-width: 150px;
+            height: auto;
+            border-radius: 15px;
+            margin-top: 10px;
+            border: 3px solid var(--primary-color);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        /* Icon Styles */
+        .form-icon {
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-nav {
+                display: flex;
+            }
+            
+            body {
+                padding-bottom: 80px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .form-card {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-nav {
+                display: none;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-title {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: white;
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Mobile Responsive Footer */
+        @media (max-width: 768px) {
+            .footer {
+                padding: 2rem 0 1.5rem;
+                text-align: center;
+            }
+            
+            .footer-title {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+            
+            .contact-info p {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .social-links {
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            
+            .copyright {
+                padding-top: 1.5rem;
+                margin-top: 1.5rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer {
+                padding: 1.5rem 0 1rem;
+            }
+            
+            .footer-title {
+                font-size: 1.1rem;
+            }
+            
+            .footer .container {
+                padding: 0 1rem;
+            }
+            
+            .contact-info p {
+                font-size: 0.85rem;
+                word-break: break-word;
+            }
+            
+            .social-link {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+            
+            .footer p {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'instructor_dashboard' %}">
+                <i class="fas fa-chalkboard-teacher me-2"></i>PTP Education - Instructor
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_dashboard' %}active{% endif %}" 
+                           href="{% url 'instructor_dashboard' %}">
+                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_course_list' %}active{% endif %}" 
+                           href="{% url 'instructor_course_list' %}">
+                            <i class="fas fa-book me-1"></i>My Courses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_enrollments' %}active{% endif %}" 
+                           href="{% url 'instructor_enrollments' %}">
+                            <i class="fas fa-users me-1"></i>Enrollments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_earnings' %}active{% endif %}" 
+                           href="{% url 'instructor_earnings' %}">
+                            <i class="fas fa-dollar-sign me-1"></i>Earnings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_conversations_list' %}active{% endif %}" 
+                           href="{% url 'instructor_conversations_list' %}">
+                            <i class="fas fa-comments me-1"></i>Messages
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="profile-dropdown dropdown">
+                    <a class="dropdown-toggle text-white text-decoration-none" href="#" role="button" data-bs-toggle="dropdown">
+                        {% if instructor_photo %}
+                        <img src="/media/{{ instructor_photo }}" alt="Profile" class="profile-img me-2">
+                        {% else %}
+                        <img src="https://placehold.co/32x32/cccccc/333333?text=I" alt="Profile" class="profile-img me-2">
+                        {% endif %}
+                        {{ instructor_name|default:"Instructor" }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item active" href="{% url 'instructor_profile' %}">
+                            <i class="fas fa-user-edit me-2"></i>Profile Settings
+                        </a></li>
+                        <li><a class="dropdown-item" href="{% url 'instructor_withdrawals' %}">
+                            <i class="fas fa-money-bill-wave me-2"></i>Withdrawals
+                        </a></li>
+                        <li><a class="dropdown-item" href="{% url 'instructor_reviews' %}">
+                            <i class="fas fa-star me-2"></i>Reviews
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'instructor_logout' %}">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav d-md-none">
+        <a href="{% url 'instructor_dashboard' %}" class="mobile-nav-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="{% url 'instructor_course_list' %}" class="mobile-nav-item">
+            <i class="fas fa-book"></i>
+            <span>Courses</span>
+        </a>
+        <a href="{% url 'instructor_enrollments' %}" class="mobile-nav-item">
+            <i class="fas fa-users"></i>
+            <span>Students</span>
+        </a>
+        <a href="{% url 'instructor_earnings' %}" class="mobile-nav-item">
+            <i class="fas fa-dollar-sign"></i>
+            <span>Earnings</span>
+        </a>
+        <a href="{% url 'instructor_conversations_list' %}" class="mobile-nav-item">
+            <i class="fas fa-comments"></i>
+            <span>Messages</span>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="hero-title">Profile Settings</h1>
+                    <p class="hero-subtitle">Manage your instructor profile and account information</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <i class="fas fa-user-cog fa-3x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card form-card">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-user-edit fa-3x text-primary mb-3"></i>
+                        <h2 class="section-title mb-2">Update Your Profile</h2>
+                        <p class="text-muted">Keep your information up to date for better student engagement</p>
+                    </div>
+                    
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-4">
+                            <label for="{{ form.username.id_for_label }}" class="form-label">
+                                <i class="fas fa-user form-icon"></i>{{ form.username.label }}
+                            </label>
+                            <input type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}" 
+                                   class="form-control" value="{{ form.username.value|default_if_none:'' }}" 
+                                   {% if form.username.field.required %}required{% endif %}>
+                            {% if form.username.errors %}
+                                <div class="text-danger mt-1">
+                                    <i class="fas fa-exclamation-circle me-1"></i>{{ form.username.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">
+                                <i class="fas fa-envelope form-icon"></i>{{ form.email.label }}
+                            </label>
+                            <input type="email" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}" 
+                                   class="form-control" value="{{ form.email.value|default_if_none:'' }}" 
+                                   {% if form.email.field.required %}required{% endif %}>
+                            {% if form.email.errors %}
+                                <div class="text-danger mt-1">
+                                    <i class="fas fa-exclamation-circle me-1"></i>{{ form.email.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.description.id_for_label }}" class="form-label">
+                                <i class="fas fa-align-left form-icon"></i>{{ form.description.label }}
+                            </label>
+                            <textarea name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" 
+                                      rows="5" class="form-control" 
+                                      placeholder="{{ form.description.help_text }}">{{ form.description.value|default_if_none:'' }}</textarea>
+                            {% if form.description.errors %}
+                                <div class="text-danger mt-1">
+                                    <i class="fas fa-exclamation-circle me-1"></i>{{ form.description.errors }}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">
+                                <i class="fas fa-info-circle me-1"></i>Tell students about your expertise and teaching style
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.profile_photo.id_for_label }}" class="form-label">
+                                <i class="fas fa-camera form-icon"></i>{{ form.profile_photo.label }}
+                            </label>
+                            <input type="file" name="{{ form.profile_photo.name }}" id="{{ form.profile_photo.id_for_label }}" 
+                                   class="form-control" accept="image/*">
+                            {% if form.profile_photo.help_text %}
+                                <div class="form-text text-muted">
+                                    <i class="fas fa-info-circle me-1"></i>{{ form.profile_photo.help_text }}
+                                </div>
+                            {% endif %}
+                            {% if form.profile_photo.errors %}
+                                <div class="text-danger mt-1">
+                                    <i class="fas fa-exclamation-circle me-1"></i>{{ form.profile_photo.errors }}
+                                </div>
+                            {% endif %}
+
+                            {% if user_doc.profile_photo and user_doc.profile_photo != 'users/default.jpg' %}
+                                <div class="mt-3">
+                                    <p class="mb-2"><strong>Current Photo:</strong></p>
+                                    <img src="/media/{{ user_doc.profile_photo }}" alt="Current Profile Photo" class="current-profile-photo">
+                                </div>
+                            {% elif user_doc.profile_photo == 'users/default.jpg' %}
+                                <div class="mt-2 text-muted">
+                                    <i class="fas fa-user-circle me-1"></i>Using default profile photo
+                                </div>
+                            {% else %}
+                                <div class="mt-2 text-muted">
+                                    <i class="fas fa-camera me-1"></i>No profile photo uploaded yet
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save me-2"></i>Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <h3 class="footer-title">PTP Education</h3>
+                    <div class="contact-info mb-3">
+                        <p><i class="fas fa-map-marker-alt me-2"></i>123 Education Street, Yangon, Myanmar</p>
+                        <p><i class="fas fa-phone me-2"></i>+95 9 123 456 789</p>
+                        <p><i class="fas fa-envelope me-2"></i>info@ptpeducation.com</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 PTP Education. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

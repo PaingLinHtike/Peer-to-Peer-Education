@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Admin Profile - PTP Education</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #f72585;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --warning-color: #f8961e;
+            --info-color: #4895ef;
+            --danger-color: #e74c3c;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation */
+        .admin-navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .navbar-nav .nav-link.active {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            color: rgba(255, 255, 255, 0.9) !important;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white !important;
+            text-decoration: none;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        .page-header .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-title {
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-subtitle {
+            font-weight: 300;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .form-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-subtitle {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .form-body {
+            padding: 2rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+            background-color: white;
+        }
+
+        .form-control.is-invalid {
+            border-color: var(--danger-color);
+            background-color: rgba(231, 76, 60, 0.05);
+        }
+
+        .invalid-feedback {
+            display: block;
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: var(--danger-color);
+        }
+
+        .form-text {
+            font-size: 0.875rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+        }
+
+        /* Current Photo Display */
+        .current-photo {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .current-photo img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        .current-photo p {
+            margin-top: 0.5rem;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 2rem;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            border: none;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(108, 117, 125, 0.3);
+        }
+
+        /* Alert Styles */
+        .alert {
+            border-radius: 1rem;
+            border: none;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-danger {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05));
+            color: var(--danger-color);
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, rgba(76, 201, 240, 0.1), rgba(76, 201, 240, 0.05));
+            color: var(--success-color);
+            border-left: 4px solid var(--success-color);
+        }
+
+        /* Password Requirements */
+        .password-requirements {
+            background: rgba(67, 97, 238, 0.05);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .password-requirements h6 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .password-requirements ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .password-requirements li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .form-body {
+                padding: 1.5rem;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-title {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: white;
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Mobile Responsive Footer */
+        @media (max-width: 768px) {
+            .footer {
+                padding: 2rem 0 1.5rem;
+                text-align: center;
+            }
+            
+            .footer-title {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+            
+            .contact-info p {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .social-links {
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            
+            .copyright {
+                padding-top: 1.5rem;
+                margin-top: 1.5rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer {
+                padding: 1.5rem 0 1rem;
+            }
+            
+            .footer-title {
+                font-size: 1.1rem;
+            }
+            
+            .footer .container {
+                padding: 0 1rem;
+            }
+            
+            .contact-info p {
+                font-size: 0.85rem;
+                word-break: break-word;
+            }
+            
+            .social-link {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+            
+            .footer p {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg admin-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'dashboard_home' %}">
+                <i class="fas fa-shield-alt me-2"></i>Admin Dashboard
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard_home' %}">
+                            <i class="fas fa-home me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin_page' %}">
+                            <i class="fas fa-users me-1"></i>Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'course_overview' %}">
+                            <i class="fas fa-book me-1"></i>Courses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'earnings_overview' %}">
+                            <i class="fas fa-chart-line me-1"></i>Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'report_view' %}">
+                            <i class="fas fa-flag me-1"></i>Reports
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'admin_profile' %}">
+                            <i class="fas fa-user-circle me-1"></i>Profile
+                        </a>
+                    </li>
+                </ul>
+                <a href="{% url 'admin_logout' %}" class="logout-btn">
+                    <i class="fas fa-sign-out-alt me-1"></i>Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">
+                <i class="fas fa-user-edit me-3"></i>Edit Admin Profile
+            </h1>
+            <p class="page-subtitle">Update your administrator account information</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+                <!-- Form Card -->
+                <div class="form-card">
+                    <!-- Form Header -->
+                    <div class="form-header">
+                        <div class="form-icon">
+                            <i class="fas fa-user-cog"></i>
+                        </div>
+                        <h2 class="form-title">Profile Settings</h2>
+                        <p class="form-subtitle">Update your personal information and security settings</p>
+                    </div>
+
+                    <!-- Form Body -->
+                    <div class="form-body">
+                        <!-- Error Messages -->
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            <!-- Current Profile Photo -->
+                            {% if admin_data.profile_photo %}
+                                <div class="current-photo">
+                                    <img src="/users_media/{{ admin_data.profile_photo }}" alt="Current Photo">
+                                    <p>Current Profile Photo</p>
+                                </div>
+                            {% endif %}
+                            
+                            <!-- Username -->
+                            <div class="form-group">
+                                <label for="{{ form.username.id_for_label }}" class="form-label">
+                                    <i class="fas fa-user"></i>{{ form.username.label }}
+                                </label>
+                                <input type="text" name="{{ form.username.name }}" 
+                                       class="form-control{% if form.username.errors %} is-invalid{% endif %}" 
+                                       id="{{ form.username.id_for_label }}"
+                                       value="{{ form.username.value|default:'' }}" required>
+                                {% if form.username.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.username.errors %}
+                                            <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="{{ form.email.id_for_label }}" class="form-label">
+                                    <i class="fas fa-envelope"></i>{{ form.email.label }}
+                                </label>
+                                <input type="email" name="{{ form.email.name }}" 
+                                       class="form-control{% if form.email.errors %} is-invalid{% endif %}" 
+                                       id="{{ form.email.id_for_label }}"
+                                       value="{{ form.email.value|default:'' }}" required>
+                                {% if form.email.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                            <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Current Password -->
+                            <div class="form-group">
+                                <label for="{{ form.current_password.id_for_label }}" class="form-label">
+                                    <i class="fas fa-lock"></i>{{ form.current_password.label }}
+                                </label>
+                                <input type="password" name="{{ form.current_password.name }}" 
+                                       class="form-control{% if form.current_password.errors %} is-invalid{% endif %}" 
+                                       id="{{ form.current_password.id_for_label }}" required>
+                                {% if form.current_password.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.current_password.errors %}
+                                            <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>Enter your current password to confirm changes
+                                </div>
+                            </div>
+
+                            <!-- New Password -->
+                            <div class="form-group">
+                                <label for="{{ form.new_password.id_for_label }}" class="form-label">
+                                    <i class="fas fa-key"></i>{{ form.new_password.label }}
+                                </label>
+                                <input type="password" name="{{ form.new_password.name }}" 
+                                       class="form-control{% if form.new_password.errors %} is-invalid{% endif %}" 
+                                       id="{{ form.new_password.id_for_label }}">
+                                {% if form.new_password.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.new_password.errors %}
+                                            <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>Leave blank to keep current password
+                                </div>
+                                
+                                <!-- Password Requirements -->
+                                <div class="password-requirements">
+                                    <h6><i class="fas fa-shield-alt me-1\"></i>Password Requirements:</h6>
+                                    <ul>
+                                        <li>At least 8 characters long</li>
+                                        <li>Contains uppercase and lowercase letters</li>
+                                        <li>Contains at least one number</li>
+                                        <li>Contains at least one special character</li>
+                                        <li>Cannot match your username or email</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Confirm New Password -->
+                            <div class="form-group">
+                                <label for="{{ form.confirm_password.id_for_label }}" class="form-label">
+                                    <i class="fas fa-key"></i>{{ form.confirm_password.label }}
+                                </label>
+                                <input type="password" name="{{ form.confirm_password.name }}" 
+                                       class="form-control{% if form.confirm_password.errors %} is-invalid{% endif %}" 
+                                       id="{{ form.confirm_password.id_for_label }}">
+                                {% if form.confirm_password.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.confirm_password.errors %}
+                                            <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Profile Photo -->
+                            <div class="form-group">
+                                <label for="{{ form.profile_photo.id_for_label }}" class="form-label">
+                                    <i class="fas fa-camera"></i>{{ form.profile_photo.label }}
+                                </label>
+                                <input type="file" name="{{ form.profile_photo.name }}" 
+                                       class="form-control{% if form.profile_photo.errors %} is-invalid{% endif %}" 
+                                       id="{{ form.profile_photo.id_for_label }}" accept="image/*">
+                                {% if form.profile_photo.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.profile_photo.errors %}
+                                            <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                {% if form.profile_photo.help_text %}
+                                    <div class="form-text">
+                                        <i class="fas fa-info-circle me-1"></i>{{ form.profile_photo.help_text }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Form Buttons -->
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg me-md-2">
+                                    <i class="fas fa-save me-2"></i>Update Profile
+                                </button>
+                                <a href="{% url 'admin_profile' %}" class="btn btn-secondary btn-lg">
+                                    <i class="fas fa-times me-2"></i>Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <h5 class="footer-title">Peer to Peer Education</h5>
+                    <p>Our mission is to provide quality education through peer learning and knowledge sharing.</p>
+                    <div class="contact-info mb-3">
+                        <p><i class="fas fa-envelope me-2"></i> plhcumaubin1010@gmail.com</p>
+                        <p><i class="fas fa-phone me-2"></i> +95 9 781 087 426</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Peer to Peer Education. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - PTP Education</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --success-color: #059669;
+            --success-dark: #047857;
+            --danger-color: #dc2626;
+            --warning-color: #d97706;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem !important;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white !important;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: white;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            padding: 0.5rem 0;
+            z-index: 1000;
+        }
+
+        .mobile-nav .nav-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .mobile-nav .nav-link {
+            color: var(--text-primary) !important;
+            font-size: 0.8rem;
+            padding: 0.5rem !important;
+        }
+
+        .mobile-nav .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            border-radius: 1rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Profile Form */
+        .profile-form {
+            background: var(--card-background);
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .form-body {
+            padding: 2rem;
+        }
+
+        /* Profile Picture */
+        .profile-picture-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .profile-picture:hover {
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .upload-hint {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Form Controls */
+        .form-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            color: white;
+        }
+
+        .btn-outline-primary {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-color) 0%, var(--success-dark) 100%);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+            color: white;
+        }
+
+        /* Alert Styles */
+        .alert {
+            border: none;
+            border-radius: 0.75rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-success {
+            background: rgba(5, 150, 105, 0.1);
+            color: var(--success-color);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .alert-danger {
+            background: rgba(220, 38, 38, 0.1);
+            color: var(--danger-color);
+            border-left: 4px solid var(--danger-color);
+        }
+
+        /* OTP Section */
+        .otp-section {
+            background: rgba(37, 99, 235, 0.05);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .otp-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar-nav {
+                display: none;
+            }
+
+            .mobile-nav {
+                display: flex;
+            }
+
+            .main-content {
+                padding-bottom: 5rem;
+            }
+
+            body {
+                padding-bottom: 70px;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .form-body {
+                padding: 1.5rem;
+            }
+
+            .profile-picture {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header {
+                padding: 2rem 0;
+            }
+
+            .page-title {
+                font-size: 1.75rem;
+            }
+
+            .form-header,
+            .form-body {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-title {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: white;
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Mobile Responsive Footer */
+        @media (max-width: 768px) {
+            .footer {
+                padding: 2rem 0 1.5rem;
+                text-align: center;
+            }
+            
+            .footer-title {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+            
+            .contact-info p {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .social-links {
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            
+            .copyright {
+                padding-top: 1.5rem;
+                margin-top: 1.5rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer {
+                padding: 1.5rem 0 1rem;
+            }
+            
+            .footer-title {
+                font-size: 1.1rem;
+            }
+            
+            .footer .container {
+                padding: 0 1rem;
+            }
+            
+            .contact-info p {
+                font-size: 0.85rem;
+                word-break: break-word;
+            }
+            
+            .social-link {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+            
+            .footer p {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'student_dashboard' %}">
+                <i class="fas fa-graduation-cap me-2"></i>PTP Education
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'student_dashboard' %}">
+                            <i class="fas fa-home me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'my_courses' %}">
+                            <i class="fas fa-book me-1"></i>My Courses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'write_review' %}">
+                            <i class="fas fa-pen me-1"></i>Write Review
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'my_reviews' %}">
+                            <i class="fas fa-star me-1"></i>My Reviews
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'student_inbox' %}">
+                            <i class="fas fa-inbox me-1"></i>Messages
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="user-info">
+                    <span class="me-2">{{ student.username }}</span>
+                    <img src="/users_media/{{ student.profile_photo }}" alt="Profile" class="user-avatar">
+                    <a href="{% url 'student_logout' %}" class="btn btn-outline-light btn-sm ms-2">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <div class="nav-item">
+            <a class="nav-link" href="{% url 'student_dashboard' %}">
+                <i class="fas fa-home d-block"></i>Dashboard
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link" href="{% url 'my_courses' %}">
+                <i class="fas fa-book d-block"></i>Courses
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link" href="{% url 'write_review' %}">
+                <i class="fas fa-edit d-block"></i>Review
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link" href="{% url 'student_inbox' %}">
+                <i class="fas fa-envelope d-block"></i>Messages
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link active" href="{% url 'edit_student_profile' %}">
+                <i class="fas fa-user d-block"></i>Profile
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <!-- Page Header -->
+        <div class="page-header text-center">
+            <h1 class="page-title">
+                <i class="fas fa-user-edit me-3"></i>Edit Profile
+            </h1>
+            <p class="page-subtitle">Update your personal information and account settings</p>
+        </div>
+
+        <!-- Profile Form -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <div class="profile-form">
+                    <div class="form-header">
+                        <h3 class="mb-0">
+                            <i class="fas fa-user-circle me-2"></i>Profile Settings
+                        </h3>
+                    </div>
+                    
+                    <div class="form-body">
+                        <!-- Alert Messages -->
+                        {% if error %}
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-circle me-2"></i>{{ error }}
+                        </div>
+                        {% endif %}
+                        {% if success %}
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle me-2"></i>{{ success }}
+                        </div>
+                        {% endif %}
+
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <!-- Profile Picture Section -->
+                            <div class="profile-picture-section">
+                                <img src="/users_media/{{ student.profile_photo }}" id="profilePic" 
+                                     class="profile-picture" onclick="triggerUpload()" alt="Profile Picture">
+                                <input type="file" name="profile_photo" id="profileInput" style="display:none;" 
+                                       onchange="previewImage(this)" accept="image/*">
+                                <div class="upload-hint">
+                                    <i class="fas fa-camera me-1"></i>Click to change profile picture
+                                </div>
+                            </div>
+
+                            <!-- Basic Information -->
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <label for="username" class="form-label">
+                                        <i class="fas fa-user me-2"></i>Username
+                                    </label>
+                                    <input name="username" id="username" type="text" class="form-control" 
+                                           value="{{ student.username }}" required>
+                                </div>
+                            </div>
+
+                            <!-- Email Verification Section -->
+                            <div class="otp-section">
+                                <h6 class="otp-title">
+                                    <i class="fas fa-envelope me-2"></i>Email Verification
+                                </h6>
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <label for="email" class="form-label">Email Address</label>
+                                        <input name="email" id="email" type="email" class="form-control" 
+                                               value="{{ student.email }}" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <button type="button" class="btn btn-outline-primary w-100" onclick="sendOTP()">
+                                            <i class="fas fa-paper-plane me-2"></i>Send OTP
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <input id="otp" name="otp" type="text" class="form-control" 
+                                               placeholder="Enter OTP code">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <button type="button" class="btn btn-success w-100" onclick="verifyOTP()">
+                                            <i class="fas fa-check-circle me-2"></i>Verify OTP
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Password Section -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="password" class="form-label">
+                                        <i class="fas fa-lock me-2"></i>New Password (Optional)
+                                    </label>
+                                    <input name="password" id="password" type="password" class="form-control" 
+                                           placeholder="Enter new password">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="confirm" class="form-label">
+                                        <i class="fas fa-lock me-2"></i>Confirm Password
+                                    </label>
+                                    <input name="confirm" id="confirm" type="password" class="form-control" 
+                                           placeholder="Confirm new password">
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-save me-2"></i>Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <h3 class="footer-title">PTP Education</h3>
+                    <div class="contact-info mb-3">
+                        <p><i class="fas fa-map-marker-alt me-2"></i>123 Education Street, Yangon, Myanmar</p>
+                        <p><i class="fas fa-phone me-2"></i>+95 9 123 456 789</p>
+                        <p><i class="fas fa-envelope me-2"></i>info@ptpeducation.com</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 PTP Education. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function triggerUpload() {
+            document.getElementById("profileInput").click();
+        }
+
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("profilePic").src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function sendOTP() {
+            const email = document.getElementById("email").value;
+            if (!email) {
+                alert("Please enter an email address first.");
+                return;
+            }
+            
+            fetch(`/send_otp?email=${email}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "sent" || data.message) {
+                        alert("📧 OTP sent to your email!");
+                    } else {
+                        alert("❌ Failed to send OTP. Please try again.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("❌ Error sending OTP. Please try again.");
+                });
+        }
+
+        function verifyOTP() {
+            const otp = document.getElementById("otp").value;
+            if (!otp) {
+                alert("Please enter the OTP code first.");
+                return;
+            }
+            
+            fetch(`/verify_otp?otp=${otp}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "verified") {
+                        alert("✅ Email verified successfully!");
+                    } else {
+                        alert("❌ Invalid OTP code. Please try again.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("❌ Error verifying OTP. Please try again.");
+                });
+        }
+    </script>
+</body>
+
+</html>

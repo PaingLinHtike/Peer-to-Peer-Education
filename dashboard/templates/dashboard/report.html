@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports Overview - Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --success-color: #4ecdc4;
+            --warning-color: #ffe066;
+            --danger-color: #ff6b6b;
+            --info-color: #4fc3f7;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+            --border-color: #e9ecef;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark-color);
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            margin-bottom: 2rem;
+        }
+
+        .admin-header h1 {
+            color: white;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .admin-header .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-header .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .stats-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            color: var(--dark-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+        }
+
+        .section-title i {
+            color: var(--primary-color);
+            font-size: 1.75rem;
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid #ffcc02;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .stats-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--warning-color), #ffb74d);
+        }
+
+        .stats-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .stats-info h3 {
+            color: var(--dark-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #f57c00;
+            margin: 0;
+        }
+
+        .stats-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--warning-color), #ffb74d);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-color);
+            font-size: 1.5rem;
+        }
+
+        .reports-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .reports-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .reports-table table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+
+        .reports-table th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            text-align: left;
+            border: none;
+        }
+
+        .reports-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 500;
+        }
+
+        .reports-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .reports-table tr:hover {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .report-date {
+            color: var(--info-color);
+            font-weight: 600;
+        }
+
+        .report-user {
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        .report-course {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .report-reason {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            color: var(--danger-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .actions-section {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .action-btn:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px var(--shadow-color);
+            color: white;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .admin-header {
+                padding: 1rem 0;
+            }
+
+            .admin-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .main-container {
+                padding: 0 0.75rem;
+            }
+
+            .stats-section,
+            .reports-section {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.25rem;
+            }
+
+            .stats-card {
+                padding: 1.25rem;
+            }
+
+            .stats-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .stats-number {
+                font-size: 1.75rem;
+            }
+
+            .reports-table {
+                overflow-x: auto;
+            }
+
+            .reports-table th,
+            .reports-table td {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.9rem;
+                min-width: 120px;
+            }
+
+            .report-reason {
+                font-size: 0.8rem;
+                padding: 0.2rem 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .admin-header h1 {
+                font-size: 1.25rem;
+            }
+
+            .stats-section,
+            .reports-section {
+                padding: 1rem;
+            }
+
+            .stats-card {
+                padding: 1rem;
+            }
+
+            .stats-number {
+                font-size: 1.5rem;
+            }
+
+            .stats-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+
+            .reports-table th,
+            .reports-table td {
+                padding: 0.5rem 0.25rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Header -->
+    <div class="admin-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1>
+                    <i class="fas fa-flag"></i>
+                    Reports Overview
+                </h1>
+                <form action="{% url 'dashboard_home' %}" method="get" class="d-inline">
+                    <button type="submit" class="btn">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Dashboard
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <!-- Statistics Section -->
+        <div class="stats-section">
+            <h2 class="section-title">
+                <i class="fas fa-chart-pie"></i>
+                Report Statistics
+            </h2>
+            
+            <div class="stats-card">
+                <div class="stats-content">
+                    <div class="stats-info">
+                        <h3>Total Reports Received</h3>
+                        <div class="stats-number">{{ total_reports|default:0 }}</div>
+                    </div>
+                    <div class="stats-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Reports Section -->
+        <div class="reports-section">
+            <h2 class="section-title">
+                <i class="fas fa-clock"></i>
+                Recent Reports
+            </h2>
+            
+            {% if recent_reports %}
+                <div class="reports-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-calendar"></i> Date</th>
+                                <th><i class="fas fa-user"></i> Reported By</th>
+                                <th><i class="fas fa-book"></i> Course</th>
+                                <th><i class="fas fa-exclamation-circle"></i> Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for report in recent_reports %}
+                            <tr>
+                                <td class="report-date">{{ report.date|date:"M d, Y H:i" }}</td>
+                                <td class="report-user">{{ report.reported_by }}</td>
+                                <td class="report-course">{{ report.course_title }}</td>
+                                <td>
+                                    <span class="report-reason">{{ report.reason }}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h4>No reports found</h4>
+                    <p>All courses are running smoothly. New reports will appear here when submitted.</p>
+                </div>
+            {% endif %}
+
+            <!-- View All Reports Action -->
+            <div class="actions-section">
+                <a href="{% url 'all_reports' %}" class="action-btn">
+                    <i class="fas fa-list"></i>
+                    View All Reports
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bundle.min.js"></script>
+</body>
+</html>

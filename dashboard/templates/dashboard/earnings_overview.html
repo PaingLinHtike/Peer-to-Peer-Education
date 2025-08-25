@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earnings Overview - Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --success-color: #4ecdc4;
+            --warning-color: #ffe066;
+            --danger-color: #ff6b6b;
+            --info-color: #4fc3f7;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+            --border-color: #e9ecef;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark-color);
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            margin-bottom: 2rem;
+        }
+
+        .admin-header h1 {
+            color: white;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .admin-header .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-header .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .stats-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            color: var(--dark-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+        }
+
+        .section-title i {
+            color: var(--primary-color);
+            font-size: 1.75rem;
+        }
+
+        .revenue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .revenue-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .revenue-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .revenue-card.total::before {
+            background: linear-gradient(90deg, var(--success-color), #26a69a);
+        }
+
+        .revenue-card.monthly::before {
+            background: linear-gradient(90deg, var(--info-color), #29b6f6);
+        }
+
+        .revenue-card.commission::before {
+            background: linear-gradient(90deg, var(--warning-color), #ffb74d);
+        }
+
+        .revenue-card.paid::before {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .revenue-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--shadow-color);
+        }
+
+        .revenue-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .revenue-card-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            font-size: 0.95rem;
+        }
+
+        .revenue-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .revenue-card.total .revenue-card-icon {
+            background: linear-gradient(135deg, var(--success-color), #26a69a);
+        }
+
+        .revenue-card.monthly .revenue-card-icon {
+            background: linear-gradient(135deg, var(--info-color), #29b6f6);
+        }
+
+        .revenue-card.commission .revenue-card-icon {
+            background: linear-gradient(135deg, var(--warning-color), #ffb74d);
+        }
+
+        .revenue-card.paid .revenue-card-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .revenue-amount {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin: 0;
+        }
+
+        .revenue-currency {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .monthly-earnings-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .earnings-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .earnings-table table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+
+        .earnings-table th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            text-align: left;
+            border: none;
+        }
+
+        .earnings-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 500;
+        }
+
+        .earnings-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .earnings-table tr:hover {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .month-name {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .amount-cell {
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .actions-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .action-btn:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px var(--shadow-color);
+            color: white;
+        }
+
+        .action-btn.payments {
+            background: linear-gradient(135deg, var(--info-color), #29b6f6);
+        }
+
+        .action-btn.payments:hover {
+            background: linear-gradient(135deg, #29b6f6, var(--info-color));
+        }
+
+        .action-btn.withdrawals {
+            background: linear-gradient(135deg, var(--success-color), #26a69a);
+        }
+
+        .action-btn.withdrawals:hover {
+            background: linear-gradient(135deg, #26a69a, var(--success-color));
+        }
+
+        .action-btn.withdraw {
+            background: linear-gradient(135deg, var(--danger-color), #e57373);
+        }
+
+        .action-btn.withdraw:hover {
+            background: linear-gradient(135deg, #e57373, var(--danger-color));
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .admin-header {
+                padding: 1rem 0;
+            }
+
+            .admin-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .main-container {
+                padding: 0 0.75rem;
+            }
+
+            .stats-section,
+            .monthly-earnings-section,
+            .actions-section {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.25rem;
+            }
+
+            .revenue-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .revenue-card {
+                padding: 1.25rem;
+            }
+
+            .revenue-amount {
+                font-size: 1.5rem;
+            }
+
+            .earnings-table th,
+            .earnings-table td {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .action-btn {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .admin-header h1 {
+                font-size: 1.25rem;
+            }
+
+            .stats-section,
+            .monthly-earnings-section,
+            .actions-section {
+                padding: 1rem;
+            }
+
+            .revenue-card {
+                padding: 1rem;
+            }
+
+            .revenue-amount {
+                font-size: 1.25rem;
+            }
+
+            .earnings-table {
+                font-size: 0.85rem;
+            }
+
+            .earnings-table th,
+            .earnings-table td {
+                padding: 0.5rem 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Header -->
+    <div class="admin-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1>
+                    <i class="fas fa-chart-bar"></i>
+                    Earnings Overview
+                </h1>
+                <form action="{% url 'dashboard_home' %}" method="get" class="d-inline">
+                    <button type="submit" class="btn">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Dashboard
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <!-- Revenue Statistics Section -->
+        <div class="stats-section">
+            <h2 class="section-title">
+                <i class="fas fa-coins"></i>
+                Revenue Statistics
+            </h2>
+            
+            <div class="revenue-grid">
+                <div class="revenue-card total">
+                    <div class="revenue-card-header">
+                        <div class="revenue-card-title">Total Revenue</div>
+                        <div class="revenue-card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div class="revenue-amount">{{ total_revenue|floatformat:0 }}</div>
+                    <div class="revenue-currency">MMK</div>
+                </div>
+
+                <div class="revenue-card monthly">
+                    <div class="revenue-card-header">
+                        <div class="revenue-card-title">This Month Revenue</div>
+                        <div class="revenue-card-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                    </div>
+                    <div class="revenue-amount">{{ month_revenue|floatformat:0 }}</div>
+                    <div class="revenue-currency">MMK</div>
+                </div>
+
+                <div class="revenue-card commission">
+                    <div class="revenue-card-header">
+                        <div class="revenue-card-title">Platform Commission</div>
+                        <div class="revenue-card-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                    </div>
+                    <div class="revenue-amount">{{ total_platform_fee|floatformat:0 }}</div>
+                    <div class="revenue-currency">MMK</div>
+                </div>
+
+                <div class="revenue-card paid">
+                    <div class="revenue-card-header">
+                        <div class="revenue-card-title">Instructors Paid</div>
+                        <div class="revenue-card-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                    </div>
+                    <div class="revenue-amount">{{ total_paid_out|floatformat:0 }}</div>
+                    <div class="revenue-currency">MMK</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Earnings Section -->
+        <div class="monthly-earnings-section">
+            <h2 class="section-title">
+                <i class="fas fa-calendar-check"></i>
+                Monthly Earnings Breakdown
+            </h2>
+            
+            {% if monthly_earnings %}
+                <div class="earnings-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-calendar"></i> Month</th>
+                                <th><i class="fas fa-dollar-sign"></i> Total Revenue</th>
+                                <th><i class="fas fa-user-tie"></i> Paid to Instructors</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in monthly_earnings %}
+                            <tr>
+                                <td class="month-name">{{ row.month_name }}</td>
+                                <td class="amount-cell">{{ row.total|floatformat:0 }} MMK</td>
+                                <td class="amount-cell">{{ row.paid_out|floatformat:0 }} MMK</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-chart-bar"></i>
+                    <h4>No earnings data available</h4>
+                    <p>Monthly earnings will appear here once transactions are processed.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Quick Actions Section -->
+        <div class="actions-section">
+            <h2 class="section-title">
+                <i class="fas fa-tools"></i>
+                Quick Actions
+            </h2>
+            
+            <div class="action-buttons">
+                <a href="{% url 'view_all_payments' %}" class="action-btn payments">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    View All Payments
+                </a>
+                <a href="{% url 'view_withdrawals' %}" class="action-btn withdrawals">
+                    <i class="fas fa-money-check-alt"></i>
+                    View Withdrawals
+                </a>
+                <a href="{% url 'admin_withdraw' %}" class="action-btn withdraw">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    Withdraw Commission
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bundle.min.js"></script>
+</body>
+</html>

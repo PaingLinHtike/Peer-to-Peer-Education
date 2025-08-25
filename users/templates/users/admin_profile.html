@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Profile - PTP Education</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #f72585;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --warning-color: #f8961e;
+            --info-color: #4895ef;
+            --danger-color: #e74c3c;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation */
+        .admin-navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .navbar-nav .nav-link.active {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            color: rgba(255, 255, 255, 0.9) !important;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white !important;
+            text-decoration: none;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        .page-header .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-title {
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-subtitle {
+            font-weight: 300;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            margin: 0 auto 1rem;
+            display: block;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-role {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .profile-body {
+            padding: 2rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-item {
+            background: rgba(67, 97, 238, 0.05);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.1);
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        /* Action Section */
+        .action-section {
+            background: rgba(247, 37, 133, 0.05);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 2px solid rgba(247, 37, 133, 0.1);
+            text-align: center;
+        }
+
+        .action-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-edit {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-edit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-dashboard {
+            background: linear-gradient(135deg, var(--success-color), var(--info-color));
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-dashboard:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 201, 240, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .profile-name {
+                font-size: 1.5rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-edit, .btn-dashboard {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: linear-gradient(135deg, #6c5ce7 0%, #5f4dd0 100%);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-title {
+            font-weight: 600;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-info p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-info i {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        
+        .social-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+        }
+
+        /* Mobile Responsive Footer */
+        @media (max-width: 768px) {
+            .footer {
+                padding: 2rem 0 1.5rem;
+                text-align: center;
+            }
+            
+            .footer-title {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+            
+            .contact-info p {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .social-links {
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            
+            .copyright {
+                padding-top: 1.5rem;
+                margin-top: 1.5rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer {
+                padding: 1.5rem 0 1rem;
+            }
+            
+            .footer-title {
+                font-size: 1.1rem;
+            }
+            
+            .footer .container {
+                padding: 0 1rem;
+            }
+            
+            .contact-info p {
+                font-size: 0.85rem;
+                word-break: break-word;
+            }
+            
+            .social-link {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+            
+            .footer p {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg admin-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'dashboard_home' %}">
+                <i class="fas fa-shield-alt me-2"></i>Admin Dashboard
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard_home' %}">
+                            <i class="fas fa-home me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin_page' %}">
+                            <i class="fas fa-users me-1"></i>Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'course_overview' %}">
+                            <i class="fas fa-book me-1"></i>Courses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'earnings_overview' %}">
+                            <i class="fas fa-chart-line me-1"></i>Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'report_view' %}">
+                            <i class="fas fa-flag me-1"></i>Reports
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'admin_profile' %}">
+                            <i class="fas fa-user-circle me-1"></i>Profile
+                        </a>
+                    </li>
+                </ul>
+                <a href="{% url 'admin_logout' %}" class="logout-btn">
+                    <i class="fas fa-sign-out-alt me-1"></i>Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">
+                <i class="fas fa-user-circle me-3"></i>Admin Profile
+            </h1>
+            <p class="page-subtitle">Manage your administrator account settings</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <!-- Success Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>{{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+                <!-- Profile Card -->
+                <div class="profile-card">
+                    <!-- Profile Header -->
+                    <div class="profile-header">
+                        {% if admin_data.profile_photo %}
+                            <img src="/users_media/{{ admin_data.profile_photo }}" alt="Admin Photo" class="profile-avatar">
+                        {% else %}
+                            <img src="https://via.placeholder.com/120x120/4361ee/ffffff?text=ADMIN" alt="Default Admin" class="profile-avatar">
+                        {% endif %}
+                        <h2 class="profile-name">{{ admin_data.username }}</h2>
+                        <p class="profile-role">
+                            <i class="fas fa-shield-alt me-2"></i>System Administrator
+                        </p>
+                    </div>
+
+                    <!-- Profile Body -->
+                    <div class="profile-body">
+                        <!-- Information Grid -->
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i class="fas fa-user"></i>Username
+                                </div>
+                                <div class="info-value">{{ admin_data.username }}</div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i class="fas fa-envelope"></i>Email Address
+                                </div>
+                                <div class="info-value">{{ admin_data.email }}</div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i class="fas fa-calendar-alt"></i>Account Created
+                                </div>
+                                <div class="info-value">{{ admin_data.date_joined|date:'F d, Y' }}</div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i class="fas fa-clock"></i>Last Login
+                                </div>
+                                <div class="info-value">
+                                    {% if admin_data.last_login %}
+                                        {{ admin_data.last_login|date:'F d, Y - g:i A' }}
+                                    {% else %}
+                                        Never
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i class="fas fa-shield-alt"></i>Role
+                                </div>
+                                <div class="info-value">
+                                    <span class="badge bg-primary">{{ admin_data.role|title }}</span>
+                                </div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i class="fas fa-toggle-on"></i>Account Status
+                                </div>
+                                <div class="info-value">
+                                    {% if admin_data.is_active %}
+                                        <span class="badge bg-success">Active</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Inactive</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Section -->
+                        <div class="action-section">
+                            <div class="action-title">
+                                <i class="fas fa-cogs"></i>Account Management
+                            </div>
+                            <div class="action-buttons">
+                                <a href="{% url 'admin_edit_profile' %}" class="btn-edit">
+                                    <i class="fas fa-edit"></i>Edit Profile
+                                </a>
+                                <a href="{% url 'dashboard_home' %}" class="btn-dashboard">
+                                    <i class="fas fa-tachometer-alt"></i>Back to Dashboard
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h3 class="footer-title mb-4">Peer to Peer Education</h3>
+                    <p class="footer-description mb-4">
+                        Our mission is to provide quality education through peer learning and knowledge sharing.
+                    </p>
+                    <div class="contact-info mb-4">
+                        <p class="mb-2"><i class="fas fa-envelope me-2"></i> plhcumaubin1010@gmail.com</p>
+                        <p class="mb-0"><i class="fas fa-phone me-2"></i> +95 9 781 087 426</p>
+                    </div>
+                    <div class="social-links mb-4">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright text-center pt-4 mt-4">
+                <p class="mb-0">&copy; 2023 Peer to Peer Education. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

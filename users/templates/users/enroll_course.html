@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Enroll in {{ course.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #2563eb;
+        }
+
+        .rating {
+            color: gold;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        select,
+        button {
+            padding: 10px;
+            margin-top: 15px;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button {
+            background: #16a34a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #15803d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="/users_media/{{ course.course_photo }}" alt="{{ course.title }}">
+        <h2>{{ course.title }}</h2>
+        <p>💰 Price: {{ course.price }} MMK</p>
+        <div class="rating">⭐ {{ avg_rating }}/5</div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <label for="payment_method">Select Payment Method:</label>
+            <select name="payment_method" id="payment_method" required>
+                <option value="KBZ Pay">KBZ Pay</option>
+                <option value="WavePay">WavePay</option>
+                <option value="AYA Pay">AYA Pay</option>
+            </select>
+            <button type="submit">Pay & Enroll</button>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Message - PTP Education</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --success-color: #059669;
+            --success-dark: #047857;
+            --danger-color: #dc2626;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .container {
+            max-width: 100%;
+            padding: 0 2rem;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white !important;
+        }
+
+        .navbar-logo {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .navbar-toggler {
+            border: none;
+            color: white;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        .navbar-collapse {
+            justify-content: center;
+        }
+
+        .navbar-nav {
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            margin: 0;
+            padding: 0.5rem 1rem !important;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white !important;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: white;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            padding: 0.5rem 0;
+            z-index: 1000;
+        }
+
+        .mobile-nav .nav-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .mobile-nav .nav-link {
+            color: var(--text-primary) !important;
+            font-size: 0.8rem;
+            padding: 0.5rem !important;
+        }
+
+        .mobile-nav .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            border-radius: 1rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Message Form */
+        .message-form {
+            background: var(--card-background);
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .form-body {
+            padding: 2rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            color: white;
+        }
+
+        /* Alert Styles */
+        .alert {
+            border: none;
+            border-radius: 0.75rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-danger {
+            background: rgba(220, 38, 38, 0.1);
+            color: var(--danger-color);
+            border-left: 4px solid var(--danger-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar-nav {
+                display: none;
+            }
+
+            .mobile-nav {
+                display: flex;
+            }
+
+            .main-content {
+                padding-bottom: 5rem;
+            }
+
+            body {
+                padding-bottom: 70px;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .form-body {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header {
+                padding: 2rem 0;
+            }
+
+            .page-title {
+                font-size: 1.75rem;
+            }
+
+            .form-header,
+            .form-body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'student_dashboard' %}">
+                Peer to Peer Education
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'student_dashboard' %}">
+                            <i class="fas fa-home me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'my_courses' %}">
+                            <i class="fas fa-book me-1"></i>My Courses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'write_review' %}">
+                            <i class="fas fa-edit me-1"></i>Write Review
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'student_write_report' %}">
+                            <i class="fas fa-flag me-1"></i>Write Report
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'student_inbox' %}">
+                            <i class="fas fa-envelope me-1"></i>Messages
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="user-info">
+                    <img src="/users_media/{{ student_profile_pic|default:'users/default_profile.png' }}" alt="Profile" class="user-avatar">
+                    <div class="dropdown">
+                        <a class="text-white text-decoration-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-1"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'edit_student_profile' %}"><i class="fas fa-cog me-2"></i>Edit Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'student_logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <div class="nav-item">
+            <a href="{% url 'student_dashboard' %}" class="nav-link">
+                <i class="fas fa-home"></i><br>Dashboard
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="{% url 'my_courses' %}" class="nav-link">
+                <i class="fas fa-book"></i><br>Courses
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="{% url 'write_review' %}" class="nav-link">
+                <i class="fas fa-edit"></i><br>Review
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="{% url 'student_write_report' %}" class="nav-link">
+                <i class="fas fa-flag"></i><br>Report
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="{% url 'student_inbox' %}" class="nav-link active">
+                <i class="fas fa-envelope"></i><br>Messages
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <!-- Page Header -->
+        <div class="page-header text-center">
+            <h1 class="page-title">
+                <i class="fas fa-paper-plane me-3"></i>Send Message
+            </h1>
+            <p class="page-subtitle">Contact your course instructors for help and questions</p>
+        </div>
+
+        <!-- Message Form -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <div class="message-form">
+                    <div class="form-header">
+                        <h3 class="mb-0">
+                            <i class="fas fa-envelope me-2"></i>New Message
+                        </h3>
+                    </div>
+                    
+                    <div class="form-body">
+                        <!-- Error Alert -->
+                        {% if error %}
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-circle me-2"></i>{{ error }}
+                        </div>
+                        {% endif %}
+
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <!-- Recipient Selection -->
+                            <div class="mb-4">
+                                <label for="recipient" class="form-label">
+                                    <i class="fas fa-user me-2"></i>Recipient (Instructor & Course)
+                                </label>
+                                <select id="recipient" name="recipient" class="form-select" required>
+                                    <option value="">-- Select instructor and course --</option>
+                                    {% for instructor in instructors_list %}
+                                    <optgroup label="👨‍🏫 {{ instructor.username }}">
+                                        {% for course in instructor.courses %}
+                                        <option value="{{ instructor.id }}|{{ course.id }}">
+                                            📚 {{ course.title }}
+                                        </option>
+                                        {% endfor %}
+                                    </optgroup>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Message Content -->
+                            <div class="mb-4">
+                                <label for="message" class="form-label">
+                                    <i class="fas fa-comment me-2"></i>Message
+                                </label>
+                                <textarea id="message" name="message" class="form-control" rows="8" 
+                                          placeholder="Type your message here... Ask questions, request help, or discuss course content." required></textarea>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

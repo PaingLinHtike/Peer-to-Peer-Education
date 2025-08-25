@@ -1,0 +1,1119 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Peer to Peer Education</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #f72585;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --warning-color: #f8961e;
+            --info-color: #4895ef;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--dark-color);
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .container {
+            max-width: 100%;
+            padding: 0 2rem;
+        }
+
+        .navbar-collapse {
+            justify-content: center;
+        }
+
+        .navbar-nav {
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white !important;
+        }
+
+        .navbar-logo {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .navbar-toggler {
+            border: none;
+            color: white;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            margin: 0;
+            padding: 0.5rem 1rem !important;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white !important;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: white;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-subtitle {
+            font-weight: 300;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(67, 97, 238, 0.1);
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .profile-info h3 {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-info p {
+            color: #6c757d;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Section Titles */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            font-size: 1.75rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-section .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-section .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+        }
+
+        .filter-btn {
+            background: linear-gradient(135deg, var(--success-color), #26a69a);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: linear-gradient(135deg, #26a69a, var(--success-color));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.3);
+        }
+
+        /* Course Cards */
+        .course-card {
+            border: none;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            height: 100%;
+            background: white;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .course-card .card-body {
+            padding: 1.5rem;
+        }
+
+        .course-title {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--secondary-color);
+            font-size: 1.25rem;
+        }
+
+        .course-info {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-price {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Buttons */
+        .btn-custom {
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            margin: 0.25rem;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .btn-primary-custom:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success-custom {
+            background: linear-gradient(135deg, var(--success-color), #26a69a);
+            color: white;
+        }
+
+        .btn-success-custom:hover {
+            background: linear-gradient(135deg, #26a69a, var(--success-color));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.3);
+        }
+
+        .btn-danger-custom {
+            background: linear-gradient(135deg, var(--accent-color), #e91e63);
+            color: white;
+        }
+
+        .btn-danger-custom:hover {
+            background: linear-gradient(135deg, #e91e63, var(--accent-color));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
+        }
+
+        .btn-disabled {
+            background: #6c757d;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        /* Modals */
+        .modal-content {
+            border-radius: 1rem;
+            border: none;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 1rem 1rem 0 0;
+            border-bottom: none;
+        }
+
+        .modal-title {
+            font-weight: 600;
+        }
+
+        .btn-close {
+            filter: invert(1);
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            padding: 0.5rem 0;
+            z-index: 1000;
+        }
+
+        .mobile-nav .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 0 0.25rem;
+        }
+
+        .mobile-nav .nav-link {
+            color: var(--dark-color) !important;
+            font-size: 0.75rem;
+            padding: 0.75rem 0.25rem !important;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+
+        /* Large Screen Optimizations */
+        @media (min-width: 1200px) {
+            .navbar .container {
+                padding: 0 3rem;
+            }
+
+            .navbar-nav {
+                gap: 1rem;
+            }
+
+            .navbar-nav .nav-link {
+                padding: 0.6rem 1.2rem !important;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .navbar .container {
+                padding: 0 1rem;
+            }
+
+            .navbar-nav {
+                gap: 0.25rem;
+            }
+
+            .navbar-nav .nav-link {
+                padding: 0.4rem 0.6rem !important;
+                font-size: 0.9rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .profile-card {
+                padding: 1.5rem;
+            }
+
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .course-card .card-body {
+                padding: 1rem;
+            }
+
+            .mobile-nav {
+                display: flex;
+            }
+
+            body {
+                padding-bottom: 70px;
+            }
+
+            .navbar-nav {
+                display: none;
+            }
+
+            .filter-section {
+                padding: 1rem;
+            }
+
+            .btn-custom {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-section {
+                padding: 2rem 0;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .profile-card {
+                padding: 1rem;
+            }
+
+            .course-img {
+                height: 150px;
+            }
+
+            .filter-section .row {
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+     
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'student_dashboard' %}">PTP Education
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'student_dashboard' %}">
+                            <i class="fas fa-home me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'my_courses' %}">
+                            <i class="fas fa-book me-1"></i>My Courses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'write_review' %}">
+                            <i class="fas fa-edit me-1"></i>Write Review
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'student_write_report' %}">
+                            <i class="fas fa-flag me-1"></i>Write Report
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'student_inbox' %}">
+                            <i class="fas fa-envelope me-1"></i>Messages
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="user-info">
+                    <img src="/users_media/{{ profile_photo }}" alt="Profile" class="user-avatar">
+                    <a href="{% url 'student_logout' %}" class="btn btn-outline-light btn-sm ms-2">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content text-center">
+                <h1 class="hero-title">Welcome Back, {{ student_name }}!</h1>
+                <p class="hero-subtitle">Continue your learning journey with our amazing courses</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        {% csrf_token %}
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <img src="/users_media/{{ profile_photo }}" alt="Profile Photo" class="profile-avatar">
+                </div>
+                <div class="col">
+                    <div class="profile-info">
+                        <h3>{{ student_name }}</h3>
+                        <p><i class="fas fa-envelope me-2"></i>{{ student_email }}</p>
+                        <a href="{% url 'edit_student_profile' %}" class="btn btn-primary-custom btn-custom">
+                            <i class="fas fa-edit me-1"></i>Edit Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Available Courses Section -->
+        <h2 class="section-title">Available Courses</h2>
+
+        <!-- Category Filter -->
+        <div class="filter-section">
+            <form method="get" class="row align-items-center">
+                <div class="col-md-3">
+                    <label for="category" class="form-label fw-bold">Filter by Category:</label>
+                </div>
+                <div class="col-md-6">
+                    <select id="category" name="category" class="form-select">
+                        <option value="">All Categories</option>
+                        {% for cat in categories %}
+                        <option value="{{ cat }}" {% if selected_category == cat %}selected{% endif %}>{{ cat }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn filter-btn me-2">
+                        <i class="fas fa-filter me-1"></i>Apply
+                    </button>
+                    {% if selected_category %}
+                    <a href="{% url 'student_dashboard' %}" class="btn btn-secondary">
+                        <i class="fas fa-times me-1"></i>Reset
+                    </a>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+
+        <!-- Course Grid -->
+        <div class="row">
+            {% for course in courses %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card course-card">
+                    <img src="/users_media/{{ course.photo }}" class="card-img-top course-img" alt="{{ course.title }}">
+                    <div class="card-body">
+                        <h5 class="course-title">{{ course.title }}</h5>
+                        <p class="course-info">
+                            <i class="fas fa-user-tie me-1"></i>{{ course.instructor }}
+                        </p>
+                        <p class="course-info">
+                            <i class="fas fa-tag me-1"></i>{{ course.category }}
+                        </p>
+                        <span class="course-price">{{ course.price }} MMK</span>
+                        
+                        <div class="mt-3">
+                            <button class="btn btn-success-custom btn-custom view-details-btn" 
+                                    data-title="{{ course.title }}"
+                                    data-description="{{ course.description|default:'No description' }}"
+                                    data-photo="/users_media/{{ course.photo }}" 
+                                    data-category="{{ course.category }}"
+                                    data-price="{{ course.price }}" 
+                                    data-rating="{{ course.rating|default:'No rating' }}">
+                                <i class="fas fa-eye me-1"></i>View Details
+                            </button>
+
+                            {% if course.id in enrolled_course_ids %}
+                            <button class="btn btn-disabled btn-custom" disabled>
+                                <i class="fas fa-check me-1"></i>Enrolled
+                            </button>
+                            {% else %}
+                            <button class="btn btn-danger-custom btn-custom enroll-btn" 
+                                    data-id="{{ course.id }}" 
+                                    data-title="{{ course.title }}"
+                                    data-photo="/users_media/{{ course.photo }}" 
+                                    data-price="{{ course.price }}"
+                                    data-rating="{{ course.rating|default:'No rating' }}">
+                                <i class="fas fa-plus me-1"></i>Enroll
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>No courses available at the moment.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <div class="nav-item">
+            <a class="nav-link active" href="{% url 'student_dashboard' %}">
+                <i class="fas fa-home d-block"></i>Dashboard
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link" href="{% url 'my_courses' %}">
+                <i class="fas fa-book d-block"></i>Courses
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link" href="{% url 'student_write_report' %}">
+                <i class="fas fa-flag d-block"></i>Report
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link" href="{% url 'student_inbox' %}">
+                <i class="fas fa-envelope d-block"></i>Messages
+            </a>
+        </div>
+    </nav>
+
+    <!-- Course Details Modal -->
+    <div id="courseModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeCourseModal">&times;</span>
+            <div class="modal-header">
+                <h3 id="modalCourseTitle"></h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img id="modalCoursePhoto" src="" alt="Course Image" class="img-fluid mb-3">
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Category:</strong> <span id="modalCourseCategory"></span></p>
+                        <p><strong>Price:</strong> <span id="modalCoursePrice"></span> MMK</p>
+                        <p><strong>Rating:</strong> <span id="modalCourseRating"></span></p>
+                        <p><strong>Description:</strong></p>
+                        <p id="modalCourseDescription"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enroll/Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h3>Enroll in <span id="modalCourseTitleEnroll"></span></h3>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img id="modalCoursePhotoEnroll" src="" alt="Course Image" class="img-fluid mb-3">
+                        <p><strong>Price:</strong> <span id="modalCoursePriceEnroll"></span> MMK</p>
+                        <p><strong>Category:</strong> <span id="modalCourseCategoryEnroll"></span></p>
+                        <p><strong>Rating:</strong> <span id="modalCourseRatingEnroll"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Description:</strong></p>
+                        <p id="modalCourseDescriptionEnroll"></p>
+                        <div class="mt-3">
+                            <label for="payment_method" class="form-label">Select Payment Method:</label>
+                            <select id="payment_method" class="form-select">
+                                <option value="">-- Select Payment Method --</option>
+                                <option value="KBZ Pay">KBZ Pay</option>
+                                <option value="WavePay">WavePay</option>
+                                <option value="AYA Pay">AYA Pay</option>
+                            </select>
+                        </div>
+                        <button id="payBtn" class="btn btn-primary w-100 mt-3">Pay & Enroll</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+        }
+
+        .modal-body {
+            padding: 15px 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #6c5ce7 0%, #5f4dd0 100%);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-title {
+            font-weight: 600;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-info p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-info i {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        
+        .social-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+        }
+
+        /* Mobile Responsive Footer */
+        @media (max-width: 768px) {
+            .footer {
+                padding: 2rem 0 1.5rem;
+                text-align: center;
+            }
+            
+            .footer-title {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+            
+            .contact-info p {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .social-links {
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            
+            .copyright {
+                padding-top: 1.5rem;
+                margin-top: 1.5rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer {
+                padding: 1.5rem 0 1rem;
+            }
+            
+            .footer-title {
+                font-size: 1.1rem;
+            }
+            
+            .footer .container {
+                padding: 0 1rem;
+            }
+            
+            .contact-info p {
+                font-size: 0.85rem;
+                word-break: break-word;
+            }
+            
+            .social-link {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+            
+            .footer p {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+        }
+    </style>
+
+    <!-- SIDEBAR -->
+        <!-- <div class="sidebar">
+            <a href="{% url 'student_dashboard' %}">🏠 Dashboard</a>
+            <a href="{% url 'my_courses' %}">📚 My Courses</a>
+            <a href="{% url 'write_review' %}">✍ Write Review</a>
+            <a href="{% url 'my_reviews' %}">⭐ My Reviews</a>
+            <a href="{% url 'student_inbox' %}">📩 My Messages</a>
+            <a href="{% url 'send_message' %}">📨 Send Message</a>
+            <a href="{% url 'edit_student_profile' %}">⚙ Edit Profile</a>
+            <a href="{% url 'student_logout' %}">🚪 Logout</a>
+        </div> -->
+
+        <!-- MAIN CONTENT -->
+        
+
+
+
+        <script>
+            // Wait for DOM to be fully loaded
+            document.addEventListener('DOMContentLoaded', function () {
+                console.log("DOM loaded, setting up event listeners...");
+
+                try {
+                    // VIEW DETAILS BUTTON MODAL
+                    const viewDetailsBtns = document.querySelectorAll(".view-details-btn");
+                    console.log("Found", viewDetailsBtns.length, "view details buttons");
+
+                    viewDetailsBtns.forEach(btn => {
+                        btn.addEventListener("click", function () {
+                            console.log("View details clicked for:", this.dataset.title);
+                            try {
+                                document.getElementById("modalCourseTitle").innerText = this.dataset.title;
+                                document.getElementById("modalCoursePhoto").src = this.dataset.photo;
+                                document.getElementById("modalCourseCategory").innerText = this.dataset.category;
+                                document.getElementById("modalCoursePrice").innerText = this.dataset.price;
+                                document.getElementById("modalCourseRating").innerText = this.dataset.rating;
+                                document.getElementById("modalCourseDescription").innerText = this.dataset.description;
+                                document.getElementById("courseModal").style.display = "flex";
+                            } catch (err) {
+                                console.error("Error in view details:", err);
+                                alert("Error showing course details. Please try again.");
+                            }
+                        });
+                    });
+
+                    // CLOSE COURSE DETAILS MODAL
+                    const closeCourseModal = document.getElementById("closeCourseModal");
+                    if (closeCourseModal) {
+                        closeCourseModal.onclick = function () {
+                            document.getElementById("courseModal").style.display = "none";
+                        };
+                    }
+
+                    // ENROLL BUTTON MODAL
+                    const enrollBtns = document.querySelectorAll(".enroll-btn");
+                    console.log("Found", enrollBtns.length, "enroll buttons");
+
+                    enrollBtns.forEach(btn => {
+                        btn.addEventListener("click", function () {
+                            console.log("Enroll clicked for course ID:", this.dataset.id);
+                            const courseId = this.dataset.id;
+
+                            // Fetch full course info + rating from backend
+                            fetch(`/get_course_info/${courseId}/`)
+                                .then(res => {
+                                    if (!res.ok) {
+                                        throw new Error(`HTTP error! status: ${res.status}`);
+                                    }
+                                    return res.json();
+                                })
+                                .then(data => {
+                                    console.log("Course info received:", data);
+                                    document.getElementById("modalCourseTitleEnroll").innerText = data.title;
+                                    document.getElementById("modalCoursePhotoEnroll").src = data.photo;
+                                    document.getElementById("modalCoursePriceEnroll").innerText = data.price;
+                                    document.getElementById("modalCourseCategoryEnroll").innerText = data.category;
+                                    document.getElementById("modalCourseDescriptionEnroll").innerText = data.description;
+                                    document.getElementById("modalCourseRatingEnroll").innerText = data.avg_rating;
+
+                                    document.getElementById("paymentModal").style.display = "flex";
+                                    document.getElementById("payBtn").dataset.id = courseId;
+                                })
+                                .catch(err => {
+                                    console.error("Error fetching course info:", err);
+                                    alert("Error loading course information. Please try again.");
+                                });
+                        });
+                    });
+
+                    // CLOSE PAYMENT MODAL
+                    const closeModal = document.getElementById("closeModal");
+                    if (closeModal) {
+                        closeModal.onclick = function () {
+                            document.getElementById("paymentModal").style.display = "none";
+                        };
+                    }
+
+                    // PAY & ENROLL AJAX
+                    const payBtn = document.getElementById("payBtn");
+                    if (payBtn) {
+                        payBtn.onclick = function () {
+                            const courseId = this.dataset.id;
+                            const paymentMethod = document.getElementById("payment_method").value;
+                            console.log("Pay button clicked for course:", courseId, "with method:", paymentMethod);
+
+                            // Validate payment method
+                            if (!paymentMethod || paymentMethod === "" || paymentMethod === "-- Select Payment Method --") {
+                                alert("Please select a valid payment method!");
+                                return;
+                            }
+
+                            // Get CSRF token from the form
+                            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                            console.log("CSRF Token:", csrfToken);
+                            console.log("Course ID:", courseId);
+                            console.log("Payment Method:", paymentMethod);
+
+                            const requestData = { payment_method: paymentMethod };
+                            console.log("Request data being sent:", requestData);
+                            console.log("Request URL:", `/student/pay_course/${courseId}/`);
+
+                            fetch(`/student/pay_course/${courseId}/`, {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "X-CSRFToken": csrfToken
+                                },
+                                body: JSON.stringify(requestData)
+                            })
+                                .then(res => {
+                                    console.log("Response status:", res.status);
+                                    console.log("Response headers:", res.headers);
+                                    if (!res.ok) {
+                                        return res.text().then(text => {
+                                            console.log("Error response body:", text);
+                                            throw new Error(`HTTP error! status: ${res.status}, body: ${text}`);
+                                        });
+                                    }
+                                    return res.json();
+                                })
+                                .then(data => {
+                                    console.log("Payment response:", data);
+                                    if (data.status === "success") {
+                                        alert("Pending Enrollment successful! Emails sent.");
+                                        location.reload();
+                                    } else {
+                                        alert(data.message || "Enrollment failed!");
+                                    }
+                                })
+                                .catch(err => {
+                                    console.error("Error during enrollment:", err);
+                                    alert("Enrollment failed! Error: " + err.message);
+                                });
+                        };
+                    }
+
+                    // Close modals when clicking outside
+                    window.onclick = function (event) {
+                        if (event.target == document.getElementById("courseModal")) {
+                            document.getElementById("courseModal").style.display = "none";
+                        }
+                        if (event.target == document.getElementById("paymentModal")) {
+                            document.getElementById("paymentModal").style.display = "none";
+                        }
+                    };
+
+                    console.log("Event listeners setup complete");
+                } catch (err) {
+                    console.error("Error setting up event listeners:", err);
+                    alert("Error setting up page functionality. Please refresh the page.");
+                }
+            });
+        </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h3 class="footer-title mb-4">Peer to Peer Education</h3>
+                    <p class="footer-description mb-4">
+                        Our mission is to provide quality education through peer learning and knowledge sharing.
+                    </p>
+                    <div class="contact-info mb-4">
+                        <p class="mb-2"><i class="fas fa-envelope me-2"></i> plhcumaubin1010@gmail.com</p>
+                        <p class="mb-0"><i class="fas fa-phone me-2"></i> +95 9 781 087 426</p>
+                    </div>
+                    <div class="social-links mb-4">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright text-center pt-4 mt-4">
+                <p class="mb-0">&copy; 2023 Peer to Peer Education. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    </body>
+
+    </html>

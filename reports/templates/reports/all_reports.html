@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Reports - PTP Education Admin</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #f72585;
+            --success-color: #4cc9f0;
+            --warning-color: #f8961e;
+            --info-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .admin-navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        /* Table Styles */
+        .table-responsive {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table thead th {
+            background: var(--gradient-primary);
+            color: white;
+            font-weight: 600;
+            border: none;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .table tbody td {
+            padding: 1rem;
+            border-color: rgba(0, 0, 0, 0.05);
+            vertical-align: middle;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        /* Buttons */
+        .btn-custom {
+            border-radius: 10px;
+            font-weight: 500;
+            padding: 0.5rem 1.5rem;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+            color: white;
+        }
+
+        .btn-success-custom {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .btn-success-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+            color: white;
+        }
+
+        .btn-info-custom {
+            background: linear-gradient(135deg, var(--info-color), var(--success-color));
+            color: white;
+        }
+
+        .btn-info-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(72, 149, 239, 0.4);
+            color: white;
+        }
+
+        /* Filter Form */
+        .filter-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .form-select, .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-select:focus, .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-resolved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-unresolved {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-section {
+                padding: 2rem 0 1rem;
+            }
+            
+            .filter-form {
+                padding: 1.5rem;
+            }
+            
+            .table-responsive {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="hero-title">
+                        <i class="fas fa-file-alt me-3"></i>
+                        All Reports
+                    </h1>
+                    <p class="hero-subtitle">
+                        Manage and review all student reports submitted for courses and instructors
+                    </p>
+                </div>
+                <div class="col-lg-4 text-end">
+                    <a href="{% url 'report_view' %}" class="btn btn-info-custom btn-custom">
+                        <i class="fas fa-chart-bar me-2"></i>
+                        View Report Overview
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container py-4">
+        <!-- Filter Section -->
+        <div class="card mb-4">
+            <div class="card-header bg-light">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-filter me-2 text-primary"></i>
+                    Filter Reports
+                </h5>
+            </div>
+            <div class="card-body filter-form">
+                <form method="get" class="row g-3">
+                    <div class="col-md-3">
+                        <label for="user_id" class="form-label">Reporter</label>
+                        <select name="user_id" id="user_id" class="form-select">
+                            <option value="">All Reporters</option>
+                            {% for id, name in all_users.items %}
+                            <option value="{{ id }}" {% if request.GET.user_id == id %}selected{% endif %}>{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <label for="course_id" class="form-label">Course</label>
+                        <select name="course_id" id="course_id" class="form-select">
+                            <option value="">All Courses</option>
+                            {% for id, title in all_courses.items %}
+                            <option value="{{ id }}" {% if request.GET.course_id == id %}selected{% endif %}>{{ title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-2">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="date" name="date" id="date" class="form-control" value="{{ request.GET.date }}">
+                    </div>
+                    
+                    <div class="col-md-2">
+                        <label for="status" class="form-label">Status</label>
+                        <select name="status" id="status" class="form-select">
+                            <option value="">All Status</option>
+                            <option value="resolved" {% if request.GET.status == 'resolved' %}selected{% endif %}>Resolved</option>
+                            <option value="unresolved" {% if request.GET.status == 'unresolved' %}selected{% endif %}>Unresolved</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary-custom btn-custom w-100">
+                            <i class="fas fa-search me-1"></i> Apply Filters
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Reports Table -->
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-list me-2 text-primary"></i>
+                    Reports List
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-calendar me-1"></i> Date</th>
+                                <th><i class="fas fa-user me-1"></i> Reported By</th>
+                                <th><i class="fas fa-book me-1"></i> Against Course</th>
+                                <th><i class="fas fa-exclamation-triangle me-1"></i> Reason</th>
+                                <th><i class="fas fa-file-text me-1"></i> Description</th>
+                                <th class="text-center"><i class="fas fa-cogs me-1"></i> Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for report in reports %}
+                            <tr>
+                                <td>
+                                    <span class="fw-medium">{{ report.date|date:"M d, Y" }}</span><br>
+                                    <small class="text-muted">{{ report.date|date:"H:i" }}</small>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-circle bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 35px; height: 35px; font-size: 0.8rem;">
+                                            {{ report.reported_by_name|slice:":1"|upper }}
+                                        </div>
+                                        <span class="fw-medium">{{ report.reported_by_name }}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="fw-medium text-primary">{{ report.course_title }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-warning text-dark">{{ report.reason }}</span>
+                                </td>
+                                <td>
+                                    <span class="text-truncate d-inline-block" style="max-width: 200px;" title="{{ report.description }}">
+                                        {{ report.description }}
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    {% if not report.resolved_at %}
+                                        <form action="{% url 'resolve_report' report.id %}" method="post" style="display:inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-success-custom btn-sm btn-custom" 
+                                                    onclick="return confirm('Are you sure you want to resolve this report?')">
+                                                <i class="fas fa-check me-1"></i> Resolve
+                                            </button>
+                                        </form>
+                                    {% else %}
+                                        <span class="status-badge status-resolved">
+                                            <i class="fas fa-check-circle me-1"></i> Resolved
+                                        </span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center py-4">
+                                    <div class="text-muted">
+                                        <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
+                                        <h5>No reports found</h5>
+                                        <p>There are currently no reports matching your criteria.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

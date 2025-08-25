@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Dashboard - PTP Education</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #f72585;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --warning-color: #f8961e;
+            --info-color: #4895ef;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--dark-color);
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background: linear-gradient(135deg, #4c63d2 0%, #6366f1 50%, #7c3aed 100%);
+            padding: 0.75rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            min-height: 60px;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 600;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        .navbar-nav {
+            align-items: center;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255,255,255,0.95) !important;
+            font-weight: 500;
+            margin: 0 0.25rem;
+            padding: 0.5rem 0.75rem !important;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-nav .nav-link i {
+            margin-right: 6px;
+            font-size: 0.85rem;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .navbar-nav .nav-link.active {
+            color: white !important;
+            background: rgba(255,255,255,0.2);
+            font-weight: 600;
+        }
+
+        .profile-dropdown .dropdown-toggle {
+            border-radius: 6px;
+            padding: 0.4rem 0.75rem;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-dropdown .dropdown-toggle:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .profile-img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .navbar-toggler {
+            border: none;
+            color: white;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1);
+            z-index: 1000;
+        }
+
+        .mobile-nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem 0.5rem;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-item.active {
+            color: var(--primary-color);
+            background: rgba(67, 97, 238, 0.1);
+        }
+
+        .mobile-nav-item i {
+            display: block;
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #6c5ce7 0%, #5f4dd0 100%);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-title {
+            font-weight: 600;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-info p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-info i {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        
+        .social-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+        }
+
+        /* Mobile Responsive Footer */
+        @media (max-width: 768px) {
+            .footer {
+                padding: 2rem 0 1.5rem;
+                text-align: center;
+            }
+            
+            .footer-title {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+            
+            .contact-info p {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .social-links {
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            
+            .copyright {
+                padding-top: 1.5rem;
+                margin-top: 1.5rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer {
+                padding: 1.5rem 0 1rem;
+            }
+            
+            .footer-title {
+                font-size: 1.1rem;
+            }
+            
+            .footer .container {
+                padding: 0 1rem;
+            }
+            
+            .contact-info p {
+                font-size: 0.85rem;
+                word-break: break-word;
+            }
+            
+            .social-link {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+            
+            .footer p {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+            border-radius: 0 0 2rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-subtitle {
+            font-weight: 300;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Stats Cards */
+        .stats-card {
+            border: none;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 2rem;
+            height: 100%;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .stats-card .card-body {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .stats-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-label {
+            color: #6c757d;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+
+        /* Course Cards */
+        .course-card {
+            border: none;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        /* Section Titles */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        /* Quick Actions */
+        .quick-action {
+            background: white;
+            border: none;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: var(--dark-color);
+            display: block;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .quick-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+            color: var(--primary-color);
+        }
+
+        .quick-action i {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar-nav {
+                display: none;
+            }
+
+            .mobile-nav {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .stats-number {
+                font-size: 2rem;
+            }
+
+            .stats-icon {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                padding-bottom: 5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-section {
+                padding: 2rem 0;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'instructor_dashboard' %}">
+                <i class="fas fa-chalkboard-teacher me-2"></i>PTP Education - Instructor
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_dashboard' %}active{% endif %}" 
+                           href="{% url 'instructor_dashboard' %}">
+                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_course_list' %}active{% endif %}" 
+                           href="{% url 'instructor_course_list' %}">
+                            <i class="fas fa-book me-1"></i>My Courses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_enrollments' %}active{% endif %}" 
+                           href="{% url 'instructor_enrollments' %}">
+                            <i class="fas fa-users me-1"></i>Enrollments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_earnings' %}active{% endif %}" 
+                           href="{% url 'instructor_earnings' %}">
+                            <i class="fas fa-dollar-sign me-1"></i>Earnings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_conversations_list' %}active{% endif %}" 
+                           href="{% url 'instructor_conversations_list' %}">
+                            <i class="fas fa-comments me-1"></i>Messages
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="profile-dropdown dropdown">
+                    <a class="dropdown-toggle text-white text-decoration-none" href="#" role="button" data-bs-toggle="dropdown">
+                        {% if instructor_photo %}
+                        <img src="/media/{{ instructor_photo }}" alt="Profile" class="profile-img me-2">
+                        {% else %}
+                        <img src="https://placehold.co/32x32/cccccc/333333?text=I" alt="Profile" class="profile-img me-2">
+                        {% endif %}
+                        {{ instructor_name|default:"Instructor" }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'instructor_profile' %}">
+                            <i class="fas fa-user-edit me-2"></i>Profile Settings
+                        </a></li>
+                        <li><a class="dropdown-item" href="{% url 'instructor_withdrawals' %}">
+                            <i class="fas fa-money-bill-wave me-2"></i>Withdrawals
+                        </a></li>
+                        <li><a class="dropdown-item" href="{% url 'instructor_reviews' %}">
+                            <i class="fas fa-star me-2"></i>Reviews
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'instructor_logout' %}">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav d-md-none">
+        <a href="{% url 'instructor_dashboard' %}" class="mobile-nav-item active">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="{% url 'instructor_course_list' %}" class="mobile-nav-item">
+            <i class="fas fa-book"></i>
+            <span>Courses</span>
+        </a>
+        <a href="{% url 'instructor_enrollments' %}" class="mobile-nav-item">
+            <i class="fas fa-users"></i>
+            <span>Students</span>
+        </a>
+        <a href="{% url 'instructor_earnings' %}" class="mobile-nav-item">
+            <i class="fas fa-dollar-sign"></i>
+            <span>Earnings</span>
+        </a>
+        <a href="{% url 'instructor_conversations_list' %}" class="mobile-nav-item">
+            <i class="fas fa-comments"></i>
+            <span>Messages</span>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container text-center">
+            <h1 class="hero-title">Welcome Back, {{ instructor_name|default:"Instructor" }}!</h1>
+            <p class="hero-subtitle">Manage your courses, track earnings, and engage with students</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Statistics Cards -->
+        <div class="row mb-5">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card stats-card">
+                    <div class="card-body">
+                        <i class="fas fa-book stats-icon" style="color: var(--primary-color);"></i>
+                        <div class="stats-number" style="color: var(--primary-color);">{{ my_course_count|default:"0" }}</div>
+                        <div class="stats-label">Total Courses</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card stats-card">
+                    <div class="card-body">
+                        <i class="fas fa-dollar-sign stats-icon" style="color: var(--success-color);"></i>
+                        <div class="stats-number" style="color: var(--success-color);">{{ total_earnings|default:"0.00"|floatformat:0 }}</div>
+                        <div class="stats-label">Total Earnings (MMK)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card stats-card">
+                    <div class="card-body">
+                        <i class="fas fa-users stats-icon" style="color: var(--info-color);"></i>
+                        <div class="stats-number" style="color: var(--info-color);">{{ total_enrollments|default:"0" }}</div>
+                        <div class="stats-label">Total Students</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Courses Section -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <h2 class="section-title">Your Top Courses</h2>
+                {% if top_courses %}
+                <div class="row">
+                    {% for course in top_courses %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card course-card">
+                            <div class="position-relative">
+                                <img src="{% if course.photo_url %}/media/{{ course.photo_url }}{% else %}https://placehold.co/400x200/4361ee/ffffff?text=Course{% endif %}" 
+                                     class="card-img-top course-img" alt="{{ course.title }}">
+                                <span class="course-badge">MMK {{ course.price|floatformat:0 }}</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ course.title }}</h5>
+                                <p class="card-text text-muted">{{ course.description|truncatewords:15 }}</p>
+                                <a href="{% url 'instructor_course_detail' pk=course.id_str %}" class="btn btn-primary">
+                                    <i class="fas fa-eye me-2"></i>View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-book-open" style="font-size: 4rem; color: #dee2e6; margin-bottom: 1rem;"></i>
+                    <h4>No Courses Yet</h4>
+                    <p class="text-muted">Start creating your first course to begin teaching!</p>
+                    <a href="{% url 'instructor_course_list' %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Create Your First Course
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Quick Actions Section -->
+        <div class="row">
+            <div class="col-12">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <a href="{% url 'instructor_course_list' %}" class="quick-action">
+                            <i class="fas fa-book"></i>
+                            <span>
+                                <strong>Manage Courses</strong><br>
+                                <small class="text-muted">Create, edit, and organize your courses</small>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <a href="{% url 'instructor_enrollments' %}" class="quick-action">
+                            <i class="fas fa-users"></i>
+                            <span>
+                                <strong>View Enrollments</strong><br>
+                                <small class="text-muted">Check student enrollments and progress</small>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <a href="{% url 'instructor_earnings' %}" class="quick-action">
+                            <i class="fas fa-chart-line"></i>
+                            <span>
+                                <strong>Review Earnings</strong><br>
+                                <small class="text-muted">Track your income and financial performance</small>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <a href="{% url 'instructor_withdrawals' %}" class="quick-action">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>
+                                <strong>Manage Withdrawals</strong><br>
+                                <small class="text-muted">Request and track payment withdrawals</small>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <a href="{% url 'instructor_reviews' %}" class="quick-action">
+                            <i class="fas fa-star"></i>
+                            <span>
+                                <strong>Course Reviews</strong><br>
+                                <small class="text-muted">Read feedback from your students</small>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <a href="{% url 'instructor_conversations_list' %}" class="quick-action">
+                            <i class="fas fa-comments"></i>
+                            <span>
+                                <strong>Messages</strong><br>
+                                <small class="text-muted">Communicate with your students</small>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h3 class="footer-title mb-4">Peer to Peer Education</h3>
+                    <p class="footer-description mb-4">
+                        Our mission is to provide quality education through peer learning and knowledge sharing.
+                    </p>
+                    <div class="contact-info mb-4">
+                        <p class="mb-2"><i class="fas fa-envelope me-2"></i> plhcumaubin1010@gmail.com</p>
+                        <p class="mb-0"><i class="fas fa-phone me-2"></i> +95 9 781 087 426</p>
+                    </div>
+                    <div class="social-links mb-4">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright text-center pt-4 mt-4">
+                <p class="mb-0">&copy; 2023 Peer to Peer Education. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

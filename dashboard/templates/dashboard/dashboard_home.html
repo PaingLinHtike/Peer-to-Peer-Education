@@ -1,0 +1,761 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Peer to Peer Education</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #f72585;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --warning-color: #f8961e;
+            --info-color: #4895ef;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--dark-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation */
+        .admin-navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Hero Section */
+        .admin-hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-weight: 700;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-weight: 300;
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #6c5ce7 0%, #5f4dd0 100%);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-title {
+            font-weight: 600;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-info p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-info i {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        
+        .social-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+        }
+
+        /* Mobile Responsive Footer */
+        @media (max-width: 768px) {
+            .footer {
+                padding: 2rem 0 1.5rem;
+                text-align: center;
+            }
+            
+            .footer-title {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+            
+            .contact-info p {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .social-links {
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            
+            .copyright {
+                padding-top: 1.5rem;
+                margin-top: 1.5rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer {
+                padding: 1.5rem 0 1rem;
+            }
+            
+            .footer-title {
+                font-size: 1.1rem;
+            }
+            
+            .footer .container {
+                padding: 0 1rem;
+            }
+            
+            .contact-info p {
+                font-size: 0.85rem;
+                word-break: break-word;
+            }
+            
+            .social-link {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+            
+            .footer p {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+        }
+
+        /* Statistics Cards */
+        .stats-section {
+            padding: 3rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(67, 97, 238, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            font-size: 0.9rem;
+            color: var(--success-color);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            color: var(--secondary-color);
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-card {
+            background: linear-gradient(135deg, var(--light-color) 0%, white 100%);
+            border: 2px solid rgba(67, 97, 238, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(67, 97, 238, 0.2);
+            border-color: var(--primary-color);
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .action-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin: 0 auto 1rem;
+            color: white;
+        }
+
+        .action-title {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .action-desc {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 1rem;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero-stats {
+                gap: 1rem;
+            }
+            
+            .hero-stat {
+                padding: 1rem;
+                min-width: 120px;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .action-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            .navbar-nav {
+                text-align: center;
+            }
+            
+            .admin-hero {
+                padding: 2rem 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-stat {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .stat-card {
+                padding: 1.5rem;
+            }
+            
+            .quick-actions,
+            .activity-feed {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg admin-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'dashboard_home' %}">
+                <i class="fas fa-shield-alt me-2"></i>Admin Dashboard
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard_home' %}"><i class="fas fa-home me-1"></i>Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin_page' %}"><i class="fas fa-users me-1"></i>Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'course_overview' %}"><i class="fas fa-book me-1"></i>Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'earnings_overview' %}"><i class="fas fa-chart-line me-1"></i>Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'report_view' %}"><i class="fas fa-flag me-1"></i>Reports</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin_profile' %}">
+                            <i class="fas fa-user-circle me-1"></i>Profile
+                        </a>
+                    </li>
+                </ul>
+                <a href="{% url 'admin_logout' %}" class="logout-btn">
+                    <i class="fas fa-sign-out-alt me-1"></i>Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="admin-hero">
+        <div class="container">
+            <div class="hero-content text-center">
+                <h1 class="hero-title">Welcome to Admin Dashboard</h1>
+                <p class="hero-subtitle">Manage your platform with powerful tools and insights</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">{{ total_users|default:"0" }}</span>
+                        <span class="hero-stat-label">Total Users</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">{{ total_courses|default:"0" }}</span>
+                        <span class="hero-stat-label">Courses</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">{{ total_revenue|default:"0" }}</span>
+                        <span class="hero-stat-label">Revenue (MMK)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, var(--success-color), var(--info-color));">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-number">{{ total_students|default:"0" }}</div>
+                        <div class="stat-label">Students</div>
+                        <div class="stat-change">+{{ new_users_week|default:"0" }} this week</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, var(--warning-color), var(--accent-color));">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="stat-number">{{ total_instructors|default:"0" }}</div>
+                        <div class="stat-label">Instructors</div>
+                        <div class="stat-change">Active educators</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="stat-number">{{ new_this_week|default:"0" }}</div>
+                        <div class="stat-label">New Courses</div>
+                        <div class="stat-change">This week</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, var(--success-color), var(--warning-color));">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-number">{{ month_revenue|default:"0" }}</div>
+                        <div class="stat-label">Monthly Revenue</div>
+                        <div class="stat-change">MMK this month</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="container mb-4">
+        <div class="quick-actions">
+            <h2 class="section-title">
+                <i class="fas fa-bolt"></i>Quick Actions
+            </h2>
+            <div class="action-grid">
+                <a href="{% url 'admin_page' %}" class="action-card">
+                    <div class="action-icon" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <div class="action-title">Manage Users</div>
+                    <div class="action-desc">View, ban, or warn users</div>
+                </a>
+                <a href="{% url 'course_overview' %}" class="action-card">
+                    <div class="action-icon" style="background: linear-gradient(135deg, var(--success-color), var(--info-color));">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="action-title">Course Management</div>
+                    <div class="action-desc">Approve or reject courses</div>
+                </a>
+                <a href="{% url 'admin_enrollments' %}" class="action-card">
+                    <div class="action-icon" style="background: linear-gradient(135deg, var(--warning-color), var(--accent-color));">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="action-title">Enrollments</div>
+                    <div class="action-desc">Monitor course enrollments</div>
+                </a>
+                <a href="{% url 'admin_payouts' %}" class="action-card">
+                    <div class="action-icon" style="background: linear-gradient(135deg, var(--success-color), var(--warning-color));">
+                        <i class="fas fa-money-check-alt"></i>
+                    </div>
+                    <div class="action-title">Payouts</div>
+                    <div class="action-desc">Process instructor payments</div>
+                </a>
+                <a href="{% url 'report_view' %}" class="action-card">
+                    <div class="action-icon" style="background: linear-gradient(135deg, var(--accent-color), var(--primary-color));">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <div class="action-title">Reports</div>
+                    <div class="action-desc">Review user reports</div>
+                </a>
+                <a href="{% url 'user_growth' %}" class="action-card">
+                    <div class="action-icon" style="background: linear-gradient(135deg, var(--info-color), var(--secondary-color));">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="action-title">Analytics</div>
+                    <div class="action-desc">View platform statistics</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Activity -->
+    <section class="container mb-4">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="activity-feed">
+                    <h2 class="section-title">
+                        <i class="fas fa-clock"></i>Recent Activity
+                    </h2>
+                    {% for log in activity_logs|slice:":10" %}
+                    <div class="activity-item">
+                        <div class="activity-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p class="activity-text">
+                                <strong>{{ log.username }}</strong> ({{ log.role }}) {{ log.action }}
+                                {% if log.performed_by and log.performed_by != "system" %}
+                                    <em>by {{ log.performed_by }}</em>
+                                {% endif %}
+                            </p>
+                            <div class="activity-time">{{ log.timestamp|date:"M d, H:i" }}</div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No recent activity</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="quick-actions">
+                    <h2 class="section-title">
+                        <i class="fas fa-tools"></i>System Tools
+                    </h2>
+                    <div class="d-grid gap-2">
+                        <form action="{% url 'clear_activity_view' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-eye-slash me-2"></i>Clear Activity View
+                            </button>
+                        </form>
+                        <form action="{% url 'clear_activity_logs' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger w-100" 
+                                    onclick="return confirm('⚠️ This will permanently delete ALL activity logs. Continue?')">
+                                <i class="fas fa-trash me-2"></i>Clear Database
+                            </button>
+                        </form>
+                        <a href="{% url 'admin_withdraw' %}" class="btn btn-outline-success w-100">
+                            <i class="fas fa-wallet me-2"></i>Platform Withdrawal
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h3 class="footer-title mb-4">Peer to Peer Education</h3>
+                    <p class="footer-description mb-4">
+                        Our mission is to provide quality education through peer learning and knowledge sharing.
+                    </p>
+                    <div class="contact-info mb-4">
+                        <p class="mb-2"><i class="fas fa-envelope me-2"></i> plhcumaubin1010@gmail.com</p>
+                        <p class="mb-0"><i class="fas fa-phone me-2"></i> +95 9 781 087 426</p>
+                    </div>
+                    <div class="social-links mb-4">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright text-center pt-4 mt-4">
+                <p class="mb-0">&copy; 2023 Peer to Peer Education. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
+       

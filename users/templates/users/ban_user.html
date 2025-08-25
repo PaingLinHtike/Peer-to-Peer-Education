@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ban User</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            padding: 50px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+
+        h2 {
+            color: red;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            margin-bottom: 20px;
+        }
+
+        .info p {
+            margin: 5px 0;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+
+        .cancel {
+            background: #ccc;
+        }
+
+        .confirm {
+            background: red;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>Are you sure you want to ban this user?</h2>
+        <div class="info">
+            <p><strong>Name:</strong> {{ user.username }} ({{ user.role }})</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="confirm">Confirm Ban</button>
+            <a href="{% url 'view_user' user.username %}"><button type="button" class="cancel">Cancel</button></a>
+        </form>
+    </div>
+
+</body>
+
+</html>

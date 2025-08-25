@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Conversations - PTP Education</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #7209b7;
+            --accent-color: #f72585;
+            --success-color: #06d6a0;
+            --warning-color: #ffd60a;
+            --danger-color: #ef233c;
+            --dark-color: #2b2d42;
+            --light-color: #f8f9fa;
+            --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background: linear-gradient(135deg, #4c63d2 0%, #6366f1 50%, #7c3aed 100%);
+            padding: 0.75rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            min-height: 60px;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 600;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        .navbar-nav {
+            align-items: center;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255,255,255,0.95) !important;
+            font-weight: 500;
+            margin: 0 0.25rem;
+            padding: 0.5rem 0.75rem !important;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-nav .nav-link i {
+            margin-right: 6px;
+            font-size: 0.85rem;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .navbar-nav .nav-link.active {
+            color: white !important;
+            background: rgba(255,255,255,0.2);
+            font-weight: 600;
+        }
+
+        .profile-dropdown .dropdown-toggle {
+            border-radius: 6px;
+            padding: 0.4rem 0.75rem;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-dropdown .dropdown-toggle:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .profile-img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .navbar-toggler {
+            border: none;
+            color: white;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--gradient-primary);
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 20px rgba(67, 97, 238, 0.1);
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .mobile-nav-item.active,
+        .mobile-nav-item:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .conversation-card {
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .conversation-card:hover {
+            border-left-color: var(--accent-color);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 2rem;
+        }
+
+        /* Button Styles */
+        .btn {
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .empty-state h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-nav {
+                display: flex;
+            }
+            
+            body {
+                padding-bottom: 80px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'instructor_dashboard' %}">
+                <i class="fas fa-chalkboard-teacher me-2"></i>PTP Education - Instructor
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_dashboard' %}active{% endif %}" 
+                           href="{% url 'instructor_dashboard' %}">
+                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_course_list' %}active{% endif %}" 
+                           href="{% url 'instructor_course_list' %}">
+                            <i class="fas fa-book me-1"></i>My Courses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_enrollments' %}active{% endif %}" 
+                           href="{% url 'instructor_enrollments' %}">
+                            <i class="fas fa-users me-1"></i>Enrollments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_earnings' %}active{% endif %}" 
+                           href="{% url 'instructor_earnings' %}">
+                            <i class="fas fa-dollar-sign me-1"></i>Earnings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'instructor_conversations_list' %}active{% endif %}" 
+                           href="{% url 'instructor_conversations_list' %}">
+                            <i class="fas fa-comments me-1"></i>Messages
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="profile-dropdown dropdown">
+                    <a class="dropdown-toggle text-white text-decoration-none" href="#" role="button" data-bs-toggle="dropdown">
+                        {% if instructor_photo %}
+                        <img src="/media/{{ instructor_photo }}" alt="Profile" class="profile-img me-2">
+                        {% else %}
+                        <img src="https://placehold.co/32x32/cccccc/333333?text=I" alt="Profile" class="profile-img me-2">
+                        {% endif %}
+                        {{ instructor_name|default:"Instructor" }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'instructor_profile' %}">
+                            <i class="fas fa-user-edit me-2"></i>Profile Settings
+                        </a></li>
+                        <li><a class="dropdown-item" href="{% url 'instructor_withdrawals' %}">
+                            <i class="fas fa-money-bill-wave me-2"></i>Withdrawals
+                        </a></li>
+                        <li><a class="dropdown-item" href="{% url 'instructor_reviews' %}">
+                            <i class="fas fa-star me-2"></i>Reviews
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'instructor_logout' %}">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav d-md-none">
+        <a href="{% url 'instructor_dashboard' %}" class="mobile-nav-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="{% url 'instructor_course_list' %}" class="mobile-nav-item">
+            <i class="fas fa-book"></i>
+            <span>Courses</span>
+        </a>
+        <a href="{% url 'instructor_enrollments' %}" class="mobile-nav-item">
+            <i class="fas fa-users"></i>
+            <span>Students</span>
+        </a>
+        <a href="{% url 'instructor_earnings' %}" class="mobile-nav-item">
+            <i class="fas fa-dollar-sign"></i>
+            <span>Earnings</span>
+        </a>
+        <a href="{% url 'instructor_conversations_list' %}" class="mobile-nav-item active">
+            <i class="fas fa-comments"></i>
+            <span>Messages</span>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="hero-title">Messages</h1>
+                    <p class="hero-subtitle">Communicate with your students and manage conversations</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a href="{% url 'instructor_new_conversation' %}" class="btn btn-light btn-lg">
+                        <i class="fas fa-plus me-2"></i>Start New Chat
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        {% if conversations %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="section-title">Your Conversations</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for conversation in conversations %}
+            <div class="col-lg-6 mb-4">
+                <div class="card conversation-card">
+                    <div class="card-body">
+                        <a href="{% url 'instructor_conversation_detail' conversation.id_str %}" class="text-decoration-none">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i class="fas fa-user-circle fa-2x text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="card-title mb-1">{{ conversation.other_participant_name }}</h5>
+                                        <small class="text-muted">
+                                            <i class="fas fa-book me-1"></i>{{ conversation.course_title }}
+                                        </small>
+                                    </div>
+                                </div>
+                                <small class="text-muted">
+                                    <i class="fas fa-clock me-1"></i>{{ conversation.last_message_date|date:"M d, Y" }}
+                                </small>
+                            </div>
+                            
+                            <div class="last-message mb-3">
+                                <p class="text-muted mb-0">
+                                    <i class="fas fa-comment me-2"></i>
+                                    <strong>Last message:</strong> "{{ conversation.last_message|truncatewords:8 }}"
+                                </p>
+                            </div>
+                            
+                            <div class="conversation-actions d-flex gap-2">
+                                <a href="{% url 'instructor_conversation_detail' conversation.id_str %}" class="btn btn-primary btn-sm flex-fill">
+                                    <i class="fas fa-comments me-1"></i>Open Chat
+                                </a>
+                                <form method="post" action="{% url 'clear_instructor_conversation' pk=conversation.id_str %}" style="flex: 1;" onsubmit="return confirm('Are you sure you want to clear this conversation? This action cannot be undone.');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                                        <i class="fas fa-trash me-1"></i>Clear
+                                    </button>
+                                </form>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-comments"></i>
+            <h3>No Conversations Yet</h3>
+            <p class="text-muted mb-4">You don't have any conversations with students yet. Start communicating with your students!</p>
+            <a href="{% url 'instructor_new_conversation' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-plus me-2"></i>Start New Conversation
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

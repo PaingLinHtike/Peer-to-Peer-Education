@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payout Management - Peer to Peer Education</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #f72585;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --warning-color: #f8961e;
+            --info-color: #4895ef;
+            --danger-color: #e74c3c;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--dark-color);
+            min-height: 100vh;
+        }
+
+        /* Admin Header */
+        .admin-header {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 2rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        .admin-header .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-title {
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .page-subtitle {
+            font-weight: 300;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .btn-dashboard {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-dashboard:hover {
+            background-color: white;
+            color: #16a34a;
+            transform: translateY(-2px);
+        }
+
+        /* Total Due Section */
+        .total-section {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(22, 163, 74, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .total-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .total-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .total-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .total-amount {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Payouts Section */
+        .payouts-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(67, 97, 238, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-title {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin: 0;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .payout-count {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #ff6b9d 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Payout Cards */
+        .payouts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .payout-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 2px solid rgba(67, 97, 238, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payout-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #16a34a, #22c55e);
+        }
+
+        .payout-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(22, 163, 74, 0.2);
+            border-color: #16a34a;
+        }
+
+        .payout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .course-info h5 {
+            margin: 0;
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .course-info p {
+            margin: 0;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+
+        .status-banned {
+            background-color: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+        }
+
+        .payout-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .payout-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .payout-detail i {
+            width: 20px;
+            color: #16a34a;
+        }
+
+        .instructor-name {
+            color: var(--info-color);
+            font-weight: 500;
+        }
+
+        .price-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(22, 163, 74, 0.1);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .price-detail {
+            text-align: center;
+        }
+
+        .price-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-bottom: 0.25rem;
+        }
+
+        .price-value {
+            font-weight: 600;
+            color: #16a34a;
+            font-size: 1.1rem;
+        }
+
+        .payout-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        .btn-action {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-mark-paid {
+            background-color: #16a34a;
+            color: white;
+        }
+
+        .btn-mark-paid:hover {
+            background-color: #15803d;
+            transform: translateY(-2px);
+        }
+
+        .btn-disabled {
+            background-color: #9ca3af;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .enrollment-date {
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: #dee2e6;
+            margin-bottom: 1rem;
+        }
+
+        .no-results h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .admin-header {
+                padding: 1.5rem 0;
+                margin-bottom: 1.5rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .total-section,
+            .payouts-section,
+            .balance-details-section {
+                padding: 1.5rem;
+            }
+
+            .total-amount {
+                font-size: 2.5rem;
+            }
+
+            .payouts-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .payout-card {
+                padding: 1.25rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .price-info {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .balance-details-section .row {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .admin-header {
+                padding: 1rem 0;
+                border-radius: 0 0 1rem 1rem;
+            }
+
+            .page-title {
+                font-size: 1.75rem;
+            }
+
+            .total-section,
+            .payouts-section,
+            .balance-details-section {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .total-amount {
+                font-size: 2rem;
+            }
+
+            .payout-header {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .payout-actions {
+                justify-content: center;
+            }
+
+            .btn-dashboard {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .balance-details-section .col-md-4 {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="page-title">Payout Management</h1>
+                    <p class="page-subtitle">Manage instructor payouts and commissions</p>
+                    <div class="admin-info">
+                        <i class="fas fa-user-shield"></i>
+                        <span>{{ admin_name }}</span>
+                    </div>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="{% url 'dashboard_home' %}" class="btn-dashboard">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Total Due Section -->
+        <div class="total-section">
+            <div class="total-content">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="total-title">Total Amount (All Enrollments)</div>
+                        <h2 class="total-amount">{{ total_due }} MMK</h2>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="total-title">Approved Amount Due</div>
+                        <h2 class="total-amount">{{ approved_due }} MMK</h2>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="total-title">Admin Available Balance</div>
+                        <h2 class="total-amount" style="color: #22c55e;">{{ admin_available_balance }} MMK</h2>
+                        <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.5rem;">30% Commission Balance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Balance Details Section -->
+        <div class="balance-details-section" style="background: white; padding: 1.5rem; border-radius: 1rem; margin-bottom: 2rem; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); border: 1px solid rgba(67, 97, 238, 0.1);">
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <div style="padding: 1rem; border-radius: 0.75rem; background: linear-gradient(135deg, #4ade80, #22c55e); color: white;">
+                        <i class="fas fa-wallet fa-2x mb-2"></i>
+                        <h4>{{ admin_commission }} MMK</h4>
+                        <p class="mb-0">Total Commission Earned</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div style="padding: 1rem; border-radius: 0.75rem; background: linear-gradient(135deg, #f59e0b, #d97706); color: white;">
+                        <i class="fas fa-hand-holding-usd fa-2x mb-2"></i>
+                        <h4>{{ total_admin_withdrawals }} MMK</h4>
+                        <p class="mb-0">Total Withdrawn</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div style="padding: 1rem; border-radius: 0.75rem; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;">
+                        <a href="{% url 'admin_withdraw' %}" style="color: white; text-decoration: none;">
+                            <i class="fas fa-arrow-circle-down fa-2x mb-2"></i>
+                            <h4>Withdraw Funds</h4>
+                            <p class="mb-0">Access Withdrawal Page</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payouts Section -->
+        <div class="payouts-section">
+            <div class="section-header">
+                <h3 class="section-title">
+                    <i class="fas fa-money-bill-wave"></i> All Course Enrollments & Payouts
+                </h3>
+                {% if rows %}
+                <div class="payout-count">
+                    Total: {{ rows|length }} enrollment{{ rows|length|pluralize }}
+                </div>
+                {% endif %}
+            </div>
+
+            {% if rows %}
+            <div class="payouts-grid">
+                {% for r in rows %}
+                <div class="payout-card">
+                    <div class="payout-header">
+                        <div class="course-info">
+                            <h5>{{ r.course_title }}</h5>
+                            <p>Student: {{ r.student_name }}</p>
+                            <p class="text-muted" style="font-size: 0.8rem;">{{ r.student_email }}</p>
+                        </div>
+                        <div>
+                            {% if r.approval_status == 'Approved' %}
+                                <span class="status-badge" style="background-color: rgba(34, 197, 94, 0.2); color: #22c55e; margin-bottom: 0.5rem; display: block;">
+                                    <i class="fas fa-check-circle"></i> Approved
+                                </span>
+                            {% elif r.approval_status == 'Pending' %}
+                                <span class="status-badge" style="background-color: rgba(251, 191, 36, 0.2); color: #f59e0b; margin-bottom: 0.5rem; display: block;">
+                                    <i class="fas fa-clock"></i> Pending
+                                </span>
+                            {% else %}
+                                <span class="status-badge" style="background-color: rgba(239, 68, 68, 0.2); color: #ef4444; margin-bottom: 0.5rem; display: block;">
+                                    <i class="fas fa-times-circle"></i> {{ r.approval_status }}
+                                </span>
+                            {% endif %}
+                            
+                            {% if r.student_status %}
+                                <span class="status-badge status-active">
+                                    <i class="fas fa-user-check"></i> Active
+                                </span>
+                            {% else %}
+                                <span class="status-badge status-banned">
+                                    <i class="fas fa-user-slash"></i> Banned
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="payout-details">
+                        <div class="payout-detail">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span class="instructor-name">{{ r.instructor_name }}</span>
+                        </div>
+                        <div class="payout-detail">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span class="enrollment-date">Enrolled: {{ r.enrolled_at|date:"M d, Y H:i" }}</span>
+                        </div>
+                    </div>
+
+                    <div class="price-info">
+                        <div class="price-detail">
+                            <div class="price-label">Course Price</div>
+                            <div class="price-value">{{ r.price }} MMK</div>
+                        </div>
+                        <div class="price-detail">
+                            <div class="price-label">Instructor Share (70%)</div>
+                            <div class="price-value">{{ r.instructor_share }} MMK</div>
+                        </div>
+                        <div class="price-detail">
+                            <div class="price-label">Admin Commission (30%)</div>
+                            <div class="price-value" style="color: #22c55e;">{% widthratio r.price 10 3 %} MMK</div>
+                        </div>
+                    </div>
+
+                    <div class="payout-actions">
+                        {% if r.approval_status == 'Approved' and r.student_status %}
+                            <form method="post" action="{% url 'mark_payout_paid' r.enrollment_id %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-action btn-mark-paid" onclick="return confirm('Mark this payout as paid?')">
+                                    <i class="fas fa-check"></i> Mark Paid
+                                </button>
+                            </form>
+                        {% elif r.approval_status == 'Pending' %}
+                            <form method="post" action="{% url 'process_pending_payout' r.enrollment_id %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-action" style="background-color: #f59e0b; color: white; cursor: pointer;" onclick="return confirm('Process payout and add {{ r.instructor_share }} MMK to instructor balance?')">
+                                    <i class="fas fa-clock"></i> Process Payout
+                                </button>
+                            </form>
+                        {% elif not r.student_status %}
+                            <button class="btn-action btn-disabled" disabled title="Student is banned - payout disabled">
+                                <i class="fas fa-user-slash"></i> Student Banned
+                            </button>
+                        {% else %}
+                            <button class="btn-action btn-disabled" disabled title="Enrollment not approved">
+                                <i class="fas fa-times"></i> Not Approved
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="no-results">
+                <i class="fas fa-money-bill-wave"></i>
+                <h4>No Enrollments Found</h4>
+                <p>No course enrollments have been made yet. Enrollments will appear here when students enroll in courses.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
