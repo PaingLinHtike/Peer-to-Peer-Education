@@ -1,0 +1,32 @@
+[{
+  "_id": {
+    "$oid": "68a7472aafdfa8f9e6fc85c1"
+  },
+  "student_id": {
+    "$oid": "6882ea107630447a1bb1ad46"
+  },
+  "course_id": {
+    "$oid": "688b6c3cac20be3ea7ce3c25"
+  },
+  "rating": 3,
+  "comment": "Java Review",
+  "reviewed_at": {
+    "$date": "2025-08-21T16:19:54.917Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68a747b3afdfa8f9e6fc85e0"
+  },
+  "student_id": {
+    "$oid": "6882d73c7630447a1bb1ad42"
+  },
+  "course_id": {
+    "$oid": "688b6c3cac20be3ea7ce3c25"
+  },
+  "rating": 1,
+  "comment": "Java Review form Thu Thu Htoo Zaw.",
+  "reviewed_at": {
+    "$date": "2025-08-21T16:22:11.354Z"
+  }
+}]

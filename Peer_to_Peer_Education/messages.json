@@ -1,0 +1,30 @@
+[{
+  "_id": {
+    "$oid": "68a768bf21b21ff564d90b33"
+  },
+  "course_id": {
+    "$oid": "688b6c3cac20be3ea7ce3c25"
+  },
+  "participants": [
+    {
+      "$oid": "68825df5228c8ba546015c9b"
+    },
+    {
+      "$oid": "6882ea107630447a1bb1ad46"
+    }
+  ],
+  "messages": [
+    {
+      "sender_id": {
+        "$oid": "68825df5228c8ba546015c9b"
+      },
+      "receiver_id": {
+        "$oid": "6882ea107630447a1bb1ad46"
+      },
+      "content": "hi",
+      "sent_at": {
+        "$date": "2025-08-24T15:09:56.792Z"
+      }
+    }
+  ]
+}]

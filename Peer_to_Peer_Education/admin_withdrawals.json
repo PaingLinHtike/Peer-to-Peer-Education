@@ -1,0 +1,40 @@
+[{
+  "_id": {
+    "$oid": "68a74955f7b01168e2650e2e"
+  },
+  "type": "platform_commission",
+  "amount": 10000,
+  "withdrawn_by": "Paing Lin Htike",
+  "withdrawn_at": {
+    "$date": "2025-08-21T16:29:09.190Z"
+  },
+  "available_before": 27000,
+  "available_after": 17000
+},
+{
+  "_id": {
+    "$oid": "68a74957f7b01168e2650e2f"
+  },
+  "type": "platform_commission",
+  "amount": 10000,
+  "withdrawn_by": "Paing Lin Htike",
+  "withdrawn_at": {
+    "$date": "2025-08-21T16:29:11.629Z"
+  },
+  "available_before": 27000,
+  "available_after": 17000
+},
+{
+  "_id": {
+    "$oid": "68a74dca720421988b94cfb6"
+  },
+  "type": "admin_balance_withdrawal",
+  "amount": 1000,
+  "withdrawn_by": "Paing Lin Htike",
+  "withdrawn_at": {
+    "$date": "2025-08-21T16:48:10.178Z"
+  },
+  "balance_before": 7000,
+  "balance_after": 6000,
+  "platform_commission": 27000
+}]

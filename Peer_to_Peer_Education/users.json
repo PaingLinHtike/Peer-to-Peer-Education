@@ -1,0 +1,267 @@
+[{
+  "_id": {
+    "$oid": "68825df5228c8ba546015c9b"
+  },
+  "username": "Dr. Haymar Soe Naing",
+  "email": "haymarsoenaingaung@gmail.com",
+  "password": "$2a$12$IumXG/0kgZcDLvIz9Uokh.FnLz0ivWWc9DpM8oEJcM9bGApihNWF6",
+  "role": "instructor",
+  "profile_photo": "users/user_profile.jpg",
+  "is_active": true,
+  "is_staff": false,
+  "date_joined": {
+    "$date": "2025-07-15T10:00:00.000Z"
+  },
+  "last_login": {
+    "$date": "2025-08-24T15:02:01.380Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6882d73c7630447a1bb1ad42"
+  },
+  "username": "Thu Thu Htoo Zaw",
+  "email": "eaintmyatmyatnwe37@gmail.com",
+  "password": "$2a$08$4vNvB5IToPHfgi0.3.o2/eejp/qQxdZmECpfiVcyiFBH9avMgHDTW",
+  "role": "student",
+  "profile_photo": "users/photo_2025-08-07_00-45-12.jpg",
+  "is_active": true,
+  "is_staff": false,
+  "date_joined": {
+    "$date": "2025-07-15T10:00:00.000Z"
+  },
+  "last_login": {
+    "$date": "2025-07-15T18:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6882f6567630447a1bb1ad48"
+  },
+  "username": "Eaint Myat Myat Nwe",
+  "email": "plhcumaubin1011@gmail.com",
+  "password": "$2b$12$EoPp2JP3nGH9GfBt0jVeeORo0t7s3NEgGvZTe3CE7kK/yM88YOqB2",
+  "role": "student",
+  "profile_photo": "users/user_profile.jpg",
+  "is_active": true,
+  "is_staff": false,
+  "date_joined": {
+    "$date": "2025-07-15T10:00:00.000Z"
+  },
+  "last_login": {
+    "$date": "2025-07-15T18:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "688374c088c00fe7a3e4273d"
+  },
+  "username": "Thiri Myat Thu",
+  "email": "thirimyatthu@gmail.com",
+  "password": "$2a$12$..T6Y16qRKGSsm2SGr4vBe61FDu71.hLkp.ARiN66uaGrDQcFMHp.",
+  "role": "student",
+  "profile_photo": "users/photo_2025-08-09_20-46-21.jpg",
+  "is_active": true,
+  "is_staff": false,
+  "date_joined": {
+    "$date": "2025-07-15T10:00:00.000Z"
+  },
+  "last_login": {
+    "$date": "2025-07-15T18:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68838d9088c00fe7a3e42741"
+  },
+  "username": "Naddy Linn Aung",
+  "email": "naddulinnaung@gmail.com",
+  "password": "$2a$12$7zY/X9an93GadWl1PkyhdOxJh/mJq272ZDhK/LAIa1zONuZf3LxhO",
+  "role": "student",
+  "profile_photo": "users/photo_2025-08-07_00-45-09.jpg",
+  "is_active": true,
+  "is_staff": false,
+  "date_joined": {
+    "$date": "2025-07-15T10:00:00.000Z"
+  },
+  "last_login": {
+    "$date": "2025-07-15T18:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6883985c88c00fe7a3e42754"
+  },
+  "username": "Dr. Yadanar Oo",
+  "email": "plhcumaubin109@gmail.com",
+  "password": "$2a$12$GpHR1snR0nQi6m.j6DoPNOcf7n1IZY7fUyPFPP4iZadld1X6u1U8.",
+  "role": "instructor",
+  "profile_photo": "users/user_profile.jpg",
+  "is_active": true,
+  "is_staff": false,
+  "date_joined": {
+    "$date": "2025-07-15T10:00:00.000Z"
+  },
+  "last_login": {
+    "$date": "2025-08-22T14:40:00.884Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68848ddfc24db6b09f0fd5b6"
+  },
+  "username": "Thein Htet San",
+  "email": "theinhtetsan@gmail.com",
+  "password": "$2b$12$EoPp2JP3nGH9GfBt0jVeeORo0t7s3NEgGvZTe3CE7kK/yM88YOqB2",
+  "role": "student",
+  "profile_photo": "users/user_profile.jpg",
+  "is_active": true,
+  "is_staff": false,
+  "date_joined": {
+    "$date": "2025-07-15T10:00:00.000Z"
+  },
+  "last_login": {
+    "$date": "2025-07-15T18:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "688491dac24db6b09f0fd5b8"
+  },
+  "username": "Nyein Min Tun",
+  "email": "nyeinmintun@gmail.com",
+  "password": "$2b$12$EoPp2JP3nGH9GfBt0jVeeORo0t7s3NEgGvZTe3CE7kK/yM88YOqB2",
+  "role": "student",
+  "profile_photo": "users/user_profile.jpg",
+  "is_active": true,
+  "is_staff": false,
+  "date_joined": {
+    "$date": "2025-08-15T10:00:00.000Z"
+  },
+  "last_login": {
+    "$date": "2025-08-15T18:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68849dc0c24db6b09f0fd5ba"
+  },
+  "username": "Htoo Aung Lin",
+  "email": "htooaunglin@gmail.com",
+  "password": "$2b$12$EoPp2JP3nGH9GfBt0jVeeORo0t7s3NEgGvZTe3CE7kK/yM88YOqB2",
+  "role": "student",
+  "profile_photo": "users/user_profile.jpg",
+  "is_active": true,
+  "is_staff": false,
+  "date_joined": {
+    "$date": "2025-08-15T10:00:00.000Z"
+  },
+  "last_login": {
+    "$date": "2025-08-15T18:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6884a031c24db6b09f0fd5bc"
+  },
+  "username": "Ye Man Aung",
+  "email": "yemanaung@gmail.com",
+  "password": "$2b$12$EoPp2JP3nGH9GfBt0jVeeORo0t7s3NEgGvZTe3CE7kK/yM88YOqB2",
+  "role": "student",
+  "profile_photo": "users/user_profile.jpg",
+  "is_active": true,
+  "is_staff": false,
+  "date_joined": {
+    "$date": "2025-07-30T10:00:00.000Z"
+  },
+  "last_login": {
+    "$date": "2025-07-30T18:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6892167f2e397a447bf5c162"
+  },
+  "username": "Paing Lin Htike",
+  "email": "plhcumaubin1012@gmail.com",
+  "password": "$2b$12$2drDKewnBKAqG35G0z9Nm.PmlcmCoIg/eX2Ss836PlZ/FgQzTQzxm",
+  "role": "student",
+  "profile_photo": "users/photo_2025-07-06_18-36-20.jpg",
+  "is_active": true,
+  "is_staff": false,
+  "date_joined": {
+    "$date": "2025-08-05T14:34:39.864Z"
+  },
+  "last_login": {
+    "$date": "2025-08-05T14:34:39.864Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68a205f6972e5fd11c183432"
+  },
+  "username": "Paing Lin Htike",
+  "email": "plhcumaubin1010@gmail.com",
+  "password": "$2b$12$l2ezUhTiGPvTaMzgA2Jqvub1wQb9vSYccX3IrQdA0T2UDtVzxXL0q",
+  "role": "admin",
+  "profile_photo": "users/photo_2025-07-06_18-36-20.jpg",
+  "is_active": true,
+  "is_staff": true
+},
+{
+  "_id": {
+    "$oid": "68a852b2df1eced20e14aae2"
+  },
+  "username": "Mya Thinn Kyu",
+  "email": "plhcumaubin109@gmail.com",
+  "password": "$2a$12$4/R7T0Pftru/cYuwQiAZ5O3BNqrdUDrTrVN7OrahBlr94qbCyM3j2",
+  "role": "student",
+  "profile_photo": "users/photo_2025-08-07_00-45-10.jpg",
+  "is_active": true,
+  "is_staff": false,
+  "date_joined": {
+    "$date": "2025-07-15T10:00:00.000Z"
+  },
+  "last_login": {
+    "$date": "2025-07-15T18:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68aa8491adacd3c644d9def5"
+  },
+  "username": "Student",
+  "email": "laraember046@gmail.com",
+  "password": "$2b$12$5RlD2wagNOx6BIjYsocOoOy3iWVXXUOzjLNaIHEOOovEzfiN1TxX2",
+  "role": "student",
+  "profile_photo": "users/Student.jpg",
+  "is_active": true,
+  "is_staff": false,
+  "date_joined": {
+    "$date": "2025-08-24T03:18:41.286Z"
+  },
+  "last_login": {
+    "$date": "2025-08-24T03:18:41.286Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68aaf82486d3a318380dbc02"
+  },
+  "username": "Instructor",
+  "email": "plhcumaubin2004@gmail.com",
+  "password": "$2b$12$Y0CQcuLY0r5UjjYGLhAbheIaKLXvgaUq8Nji15P6BV9dkvuZX172y",
+  "role": "instructor",
+  "profile_photo": "users_profile_photos/9ca174f3dd124812999c332ed317c22b_Instructor.jpg",
+  "is_active": true,
+  "is_staff": false,
+  "date_joined": {
+    "$date": "2025-08-24T11:31:48.429Z"
+  },
+  "last_login": {
+    "$date": "2025-08-24T15:11:01.913Z"
+  },
+  "specialization": "Computer Science",
+  "experience": 2,
+  "bio": "asd"
+}]

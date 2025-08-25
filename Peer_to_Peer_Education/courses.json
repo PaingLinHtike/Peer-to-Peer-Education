@@ -1,0 +1,84 @@
+[{
+  "_id": {
+    "$oid": "688b6c3cac20be3ea7ce3c25"
+  },
+  "title": "Java for Beginners",
+  "description": "A complete introduction to Java programming.",
+  "price": 30000,
+  "course_photo": "course_photos/3b5184fb11e74583a1370c6bd5c29620_Java.jpg",
+  "category": "Programming",
+  "instructor_id": {
+    "$oid": "68825df5228c8ba546015c9b"
+  },
+  "created_at": {
+    "$date": "2025-08-23T08:48:13.870Z"
+  },
+  "file": "dashboard/PYTHON BY WINHTUT 2023_Final.zip",
+  "status": "approved",
+  "updated_at": {
+    "$date": "2025-08-23T08:48:13.870Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6893a8e0a9c203449d0d0194"
+  },
+  "title": "C++ for Beginners",
+  "description": "A complete introduction to C++ programming.",
+  "price": 30000,
+  "course_photo": "course_photos/0e481bb1e32b4e3e86c4bc697e62e382_C++.png",
+  "category": "Programming",
+  "instructor_id": {
+    "$oid": "68825df5228c8ba546015c9b"
+  },
+  "created_at": {
+    "$date": "2025-08-23T08:48:33.363Z"
+  },
+  "file": "dashboard/PYTHON BY WINHTUT 2023_Final.zip",
+  "status": "approved",
+  "updated_at": {
+    "$date": "2025-08-23T08:48:33.363Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68a8888e2295543a3369d3f4"
+  },
+  "title": "Python",
+  "description": "Python basic to advance",
+  "price": 30000,
+  "category": "Programming",
+  "course_photo": "course_photos/f987b3ba1a004b7aab2e1819465f216d_Python basic to advance.jpg",
+  "file": "course_files/cf784bd744804a63a07e44d2cf58c7b2_PYTHON BY WINHTUT 2023_Final.pdf",
+  "instructor_id": {
+    "$oid": "6883985c88c00fe7a3e42754"
+  },
+  "created_at": {
+    "$date": "2025-08-22T15:11:10.989Z"
+  },
+  "updated_at": {
+    "$date": "2025-08-22T15:11:10.989Z"
+  },
+  "status": "approved"
+},
+{
+  "_id": {
+    "$oid": "68aa99a719eb3fca4709c00c"
+  },
+  "title": "Oxford International Primary Science(Stage-3)",
+  "description": "Oxford International Primary Science",
+  "price": 50000,
+  "category": "Science",
+  "course_photo": "course_photos/ffd1d00b3f0b4293876c30368ea6447a_Oxford Science.jpg",
+  "file": "course_files/005a94fc80734f4fbf0744b4966d485b_Oxford_International_Primary_Science_Stage_3_Age_7_8_Student_Workbook.pdf",
+  "instructor_id": {
+    "$oid": "68825df5228c8ba546015c9b"
+  },
+  "created_at": {
+    "$date": "2025-08-24T04:48:39.460Z"
+  },
+  "updated_at": {
+    "$date": "2025-08-24T04:48:39.460Z"
+  },
+  "status": "approved"
+}]
